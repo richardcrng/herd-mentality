@@ -33,7 +33,8 @@ export interface MarkedPlayerAnswer extends PlayerAnswer {
   mark: AnswerMark;
 }
 
-export type Round = RoundInSubmitting | RoundInModeration | CompletedRound
+export type OngoingRound = RoundInSubmitting | RoundInModeration
+export type Round = OngoingRound | CompletedRound
 
 export interface RoundInSubmitting extends RoundBase {
   status: RoundStatus.SUBMITTING;

@@ -1,33 +1,29 @@
+import { Player, ScoredPlayer } from "./player.types";
+import { CompletedRound, OngoingRound } from "./round.types";
+
 export interface GameStateCore {
   id: string;
   players: {
     [playerId: string]: Player;
   };
   round: {
-
+    ongoing: OngoingRound;
+    completed: CompletedRound[];
   };
   status: GameStatus;
   settings: GameSettings;
 }
 
-export type Game = GameStateCore;
+export interface GameStateDerived extends GameStateCore {
+  pinkCowPlayerId: string | null;
+  players: Record<string, ScoredPlayer>;
+}
+
+export type Game = GameStateDerived;
 
 export enum GameStatus {
   LOBBY = "LOBBY",
   ONGOING = "ONGOING",
-}
-
-
-export interface LocalPlayerData {
-  id: string;
-  name: string;
-  gameId?: string;
-}
-
-export interface Player extends LocalPlayerData {
-  socketId: string;
-  gameId: string;
-  isHost?: boolean;
 }
 
 export interface GameSettings {}
