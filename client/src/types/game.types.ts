@@ -3,6 +3,9 @@ export interface GameStateCore {
   players: {
     [playerId: string]: Player;
   };
+  round: {
+
+  };
   status: GameStatus;
   settings: GameSettings;
 }
@@ -13,6 +16,7 @@ export enum GameStatus {
   LOBBY = "LOBBY",
   ONGOING = "ONGOING",
 }
+
 
 export interface LocalPlayerData {
   id: string;
