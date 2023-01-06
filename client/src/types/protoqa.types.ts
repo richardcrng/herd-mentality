@@ -1,8 +1,10 @@
+export type ProtoQAId<Id extends number = number> = `train_q${Id}`
+
 // https://github.com/iesl/protoqa-data/blob/master/DATAFORMAT.md
 export interface FamilyFeudProtoQA {
   metadata: {
     /** unique id of this question */
-    id: string;
+    id: ProtoQAId;
     /** source of answer strings (eg. "umass-crowdsource", url, etc.) */
     source: string;
   };
