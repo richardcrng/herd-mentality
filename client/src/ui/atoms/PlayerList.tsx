@@ -1,5 +1,5 @@
 import { PropsWithChildren } from "react";
-import { Player } from "../../types/game.types";
+import { Player } from "../../types/player.types";
 
 interface Props {
   className?: string;
