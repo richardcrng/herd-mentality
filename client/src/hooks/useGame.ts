@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 import { bundle, useRiducer } from "riduce";
 import { useSocket } from "../socket";
-import { Game } from "../types/game.types";
+import { GameStateCore } from "../types/game.types";
 import useSocketListener from "./useSocketListener";
 
 interface UseGameResult {
-  data: Game | undefined;
+  data: GameStateCore | undefined;
   loading: boolean;
   error: string | undefined;
 }
@@ -16,11 +16,11 @@ const initialState: UseGameResult = {
   error: undefined,
 };
 
-export default function useGame(gameId: Game["id"]): UseGameResult {
+export default function useGame(gameId: string): UseGameResult {
   const socket = useSocket();
   const { state, dispatch, actions } = useRiducer(initialState);
 
-  const setGame = (game: Game) => {
+  const setGame = (game: GameStateCore) => {
     dispatch(
       bundle([actions.data.create.update(game), actions.loading.create.off()])
     );
