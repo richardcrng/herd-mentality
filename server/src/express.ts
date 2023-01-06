@@ -12,6 +12,7 @@ app.get("/", (req, res) => {
 
 app.get("/questions", async (req, res) => {
   const questions = await getQuestionDatabase();
+  console.log(questions)
   res.json({
     status: 'success',
     data: { questions }
