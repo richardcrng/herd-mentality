@@ -1,6 +1,10 @@
-import { Game } from "../types/game.types";
+import { Game, GameStateCore, GameStateDerived } from "../types/game.types";
 import { ScoredPlayer } from "../types/player.types";
 
+export const deriveGameData = (game: GameStateCore): GameStateDerived => {
+  // TODO make more robust
+  return game as GameStateDerived
+}
 
 export const getGameHost = (game: Game): ScoredPlayer & { isHost: true } => {
   const players = Object.values(game.players);

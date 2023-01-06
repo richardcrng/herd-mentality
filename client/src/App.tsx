@@ -6,9 +6,21 @@ import IndexRoute from "./routes/IndexRoute";
 import LobbyIdRoute from "./routes/LobbyIdRoute";
 import { PATHS } from "./routes/paths";
 import GameIdRoute from "./routes/GameIdRoute";
+import { useEffect } from "react";
+import { socketUrl } from './socket';
 
 function App(): JSX.Element {
   useMobileVH();
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(`${socketUrl}/questions`)
+      const { data } = await response.json();
+      console.log(Object.keys(data.questions));
+    }
+
+    getData()
+  })
 
   return (
     <Router>

@@ -2,7 +2,7 @@ import { Redirect, useParams } from "react-router-dom";
 import useGame from "../hooks/useGame";
 import useSocketPlayer from "../hooks/useSocketPlayer";
 import { GameStatus } from "../types/game.types";
-import IntroFrame from "../ui/molecules/IntroFrame";
+import { deriveGameData } from "../utils/game-utils";
 import GameIdView from "../views/GameIdView";
 import LoadingGameIdView from "../views/LoadingGameIdView";
 import { PATHS } from "./paths";
@@ -32,6 +32,6 @@ export default function GameIdRoute(): JSX.Element {
   }
 
   return (
-    <GameIdView game={game.data} />
+    <GameIdView game={deriveGameData(game.data)} />
   );
 }

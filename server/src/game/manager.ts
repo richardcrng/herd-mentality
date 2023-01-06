@@ -2,12 +2,11 @@ import { cloneDeep } from "lodash";
 import { ServerIO } from "../../../client/src/types/event.types";
 import { SERVER_IO } from "../server";
 import {
-  Game,
   GameStateCore,
   GameStatus,
-  Player,
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
+import { Player } from "../../../client/src/types/player.types";
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
 
@@ -36,7 +35,7 @@ export class GameManager {
 
   constructor(
     public gameId: string,
-    public gamesStore: Record<string, Game> = GAMES_DB,
+    public gamesStore: Record<string, GameStateCore> = GAMES_DB,
     public io: ServerIO = SERVER_IO
   ) {}
 
@@ -57,21 +56,21 @@ export class GameManager {
     });
   }
 
-  _mutate(mutativeCb: (game: Game) => void): void {
+  _mutate(mutativeCb: (game: GameStateCore) => void): void {
     this._withPointer(mutativeCb);
     this._broadcast();
   }
 
-  _pointer(): Game | undefined {
+  _pointer(): GameStateCore | undefined {
     return this.gamesStore[this.gameId];
   }
 
-  _set(game: Game): void {
+  _set(game: GameStateCore): void {
     this.gamesStore[this.gameId] = game;
     this._broadcast();
   }
 
-  _withPointer<T = void>(cb: (gamePointer: Game) => T): Operation<T> {
+  _withPointer<T = void>(cb: (gamePointer: GameStateCore) => T): Operation<T> {
     const pointer = this._pointer();
     if (pointer) {
       const result = cb(pointer);
@@ -95,6 +94,10 @@ export class GameManager {
       id: host.gameId,
       players: {
         [host.id]: host,
+      },
+      round: {
+        ongoing: null,
+        completed: []
       },
       status: GameStatus.LOBBY,
       settings: {}
@@ -173,17 +176,17 @@ export class GameManager {
     this.io.emit("PLAYER_KICKED", this.gameId, playerId);
   }
 
-  public set(game: Game): void {
+  public set(game: GameStateCore): void {
     this._set(game);
   }
 
-  public setWithPointer(cb: (gamePointer: Game) => Game): void {
+  public setWithPointer(cb: (gamePointer: GameStateCore) => GameStateCore): void {
     this._withPointer((pointer) => {
       this.set(cb(pointer));
     });
   }
 
-  public snapshot(): Game | undefined {
+  public snapshot(): GameStateCore | undefined {
     const operation = this._withPointer((pointer) => cloneDeep(pointer));
     if (operation.status === "success") {
       return operation.result;
@@ -201,7 +204,7 @@ export class GameManager {
    *  and broadcasts the update to sockets
    * @param mutativeCb - mutative callback function for the game data
    */
-  public update(mutativeCb: (game: Game) => void) {
+  public update(mutativeCb: (game: GameStateCore) => void) {
     this._mutate(mutativeCb);
   }
 

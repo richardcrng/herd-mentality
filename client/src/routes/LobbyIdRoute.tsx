@@ -9,6 +9,7 @@ import { GameStatus } from "../types/game.types";
 import { PATHS } from "./paths";
 import { useEffect } from 'react';
 import LoadingGameIdView from "../views/LoadingGameIdView";
+import { deriveGameData } from "../utils/game-utils";
 
 function LobbyIdRoute(): JSX.Element {
   const { id: gameId } = useParams<{ id: string }>();
@@ -63,7 +64,7 @@ function LobbyIdRoute(): JSX.Element {
 
   return (
     <LobbyIdView
-      game={game.data}
+      game={deriveGameData(game.data)}
       player={game.data.players[player.data.id]!}
       players={Object.values(game.data.players)}
       onGameStart={() => {
