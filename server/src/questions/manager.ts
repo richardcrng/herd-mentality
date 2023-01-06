@@ -25,6 +25,19 @@ export async function getQuestionById(id: ProtoQAId): Promise<FamilyFeudProtoQA>
   throw new Error(`Couldn't find question with id ${id}`)
 }
 
+export async function getQuestionDatabase(): Promise<typeof QUESTIONS_DB> {
+  if (Object.values(QUESTIONS_DB)) {
+    return QUESTIONS_DB;
+  }
+
+  // if not already present, trying loading and parsing
+  await parseQuestionData();
+  if (Object.values(QUESTIONS_DB)) {
+    return QUESTIONS_DB;
+  }
+
+  throw new Error(`Questions database still seems empty even after parsing`);
+}
 
 export async function parseQuestionData(): Promise<FamilyFeudProtoQA[]> {
   const rawJsonlData = await fs.readFile(dataPath, { encoding: "utf8" });

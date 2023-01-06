@@ -1,5 +1,15 @@
 export type ProtoQAId<Id extends number = number> = `train_q${Id}`
 
+export function assertsIsProtoQAId(str: string): asserts str is ProtoQAId {
+  if (!isProtoQAId(str)) {
+    throw new Error(`${str} is not a ProtoQA ID: missing "train_q" start`)
+  }
+}
+
+export function isProtoQAId(str: string): str is ProtoQAId {
+  return !!str.match("train_q")
+}
+
 // https://github.com/iesl/protoqa-data/blob/master/DATAFORMAT.md
 export interface FamilyFeudProtoQA {
   metadata: {
