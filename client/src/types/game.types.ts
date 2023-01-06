@@ -7,7 +7,7 @@ export interface GameStateCore {
     [playerId: string]: Player;
   };
   round: {
-    ongoing: OngoingRound | null;
+    ongoing: OngoingRound;
     completed: CompletedRound[];
   };
   status: GameStatus;

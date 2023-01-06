@@ -1,4 +1,4 @@
-import { cloneDeep } from "lodash";
+import { cloneDeep, sample } from "lodash";
 import { ServerIO } from "../../../client/src/types/event.types";
 import { SERVER_IO } from "../server";
 import {
@@ -7,6 +7,10 @@ import {
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
 import { Player } from "../../../client/src/types/player.types";
+import { RoundStatus } from "../../../client/src/types/round.types";
+import { QUESTIONS_ARR } from "../../../client/src/data/questions";
+import { getAllQuestions } from "../questions/manager";
+
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
 
@@ -89,18 +93,30 @@ export class GameManager {
     });
   }
 
-  public createGameWithHost(host: Player) {
+  public async createGameWithHost(host: Player): Promise<void> {
+    // okay - it should exist
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const { metadata, question } = sample(await getAllQuestions())!
+
     const newGame: GameStateCore = {
       id: host.gameId,
       players: {
         [host.id]: host,
       },
       round: {
-        ongoing: null,
-        completed: []
+        ongoing: {
+          // okay to start with this, no harm in it
+          status: RoundStatus.SUBMITTING,
+          prompt: {
+            id: metadata.id,
+            text: question.normalized,
+          },
+          playerAnswers: {}
+        },
+        completed: [],
       },
       status: GameStatus.LOBBY,
-      settings: {}
+      settings: {},
     };
 
     this._set(newGame);
