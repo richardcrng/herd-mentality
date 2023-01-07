@@ -1,10 +1,20 @@
 import { Game, GameStateCore, GameStateDerived } from "../types/game.types";
 import { ScoredPlayer } from "../types/player.types";
-import { LockedPlayerAnswer, PlayerAnswer } from '../types/round.types';
+import { AnswerMark, LockedPlayerAnswer, PlayerAnswer } from '../types/round.types';
 
 export const deriveGameData = (game: GameStateCore): GameStateDerived => {
-  // TODO make more robust
-  return game as GameStateDerived
+  
+}
+
+export const getPinkCowPlayerId = (completedRounds: { playerAnswers: Record<string, { mark: AnswerMark }> }[]): string | null => {
+  const roundsInReverseOrder = [...completedRounds].reverse();
+  for (const round of roundsInReverseOrder) {
+    const pinkCowAnswer = Object.entries(round.playerAnswers).find(([, { mark }]) => mark === AnswerMark.PINK_COW);
+    if (pinkCowAnswer) {
+      return pinkCowAnswer[0] // id from the entry
+    }
+  }
+  return null
 }
 
 export const getGameHost = (game: Game): ScoredPlayer & { isHost: true } => {
