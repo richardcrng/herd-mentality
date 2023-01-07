@@ -1,4 +1,4 @@
-interface RoundPrompt {
+export interface RoundPrompt {
   id: string;
   text: string;
 }

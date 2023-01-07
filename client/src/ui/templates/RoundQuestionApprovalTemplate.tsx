@@ -1,34 +1,20 @@
 import { GameStateDerived } from "../../types/game.types"
 import { Player } from "../../types/player.types";
+import RoundPageTemplate from "./RoundPageTemplate";
 
 interface Props {
   game: GameStateDerived;
   player: Player;
 }
 
-export default function RoundQuestionApprovalTemplate(props: Props): JSX.Element {
+export default function RoundQuestionApprovalTemplate({ game, player }: Props): JSX.Element {
 
-  if (props.player.isHost) {
-    return <RoundQuestionApprovalAsHost {...props} />
-  }
-  
-  return <RoundQuestionApprovalNonHost {...props} />
-}
+  const message = player.isHost ? "As host, you can approve this question or draw another" : "Waiting for the host to approve this question or draw another"
 
-function RoundQuestionApprovalAsHost({ game }: Props) {
   return (
-    <>
-      <h1 className="uppercase text-3xl">{game.round.ongoing.prompt.text}</h1>
-      <p>As host, you can approve this question or draw another.</p>
-    </>
-  );
-}
-
-function RoundQuestionApprovalNonHost({ game }: Props) {
-  return (
-    <>
-      <h1 className="uppercase text-3xl">{game.round.ongoing.prompt.text}</h1>
-      <p>Waiting for host to draw the next question...</p>
-    </>
-  );
+    <RoundPageTemplate
+      prompt={game.round.ongoing.prompt}
+      message={message}
+    />
+  )
 }
