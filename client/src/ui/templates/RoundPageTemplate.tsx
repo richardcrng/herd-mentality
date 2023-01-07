@@ -17,16 +17,20 @@ export default function RoundPageTemplate({ message, prompt, action: Action }: P
   );
 }
 
-const Container = styled.div`
+const Container = styled.div.attrs({
+  className: 'grid h-full'
+})`
   grid-template-areas:
     "question-text"
     "message"
     "player-data"
     "action";
+
+  grid-template-rows: min-content min-content 1fr min-content;
 `
 
 const QuestionText = styled.h1.attrs({
-  className: 'uppercase text-3xl'
+  className: 'uppercase text-3xl font-bold'
 })`
   grid-area: question-text;
 `
