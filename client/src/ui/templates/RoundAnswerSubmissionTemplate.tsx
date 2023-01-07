@@ -15,6 +15,7 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
+      players={game.players}
       action={
         <input
           className="input w-full input-bordered input-info"
