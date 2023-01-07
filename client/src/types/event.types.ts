@@ -21,6 +21,7 @@ export type ServerIO = TServer<ClientEventListeners, ServerEventListeners>;
  */
 export type ClientEventListeners = {
   APPROVE_CURRENT_PROMPT: (gameId: string) => void;
+  CONFIRM_MARKS: (gameId: string) => void;
   CREATE_HOST_GAME: (player: Player) => void;
   DRAW_NEW_PROMPT: (gameId: string, currentPromptId: RoundPrompt['id']) => void;
   EDIT_ANSWER: (gameId: string, playerId: string, typedAnswer: string) => void;

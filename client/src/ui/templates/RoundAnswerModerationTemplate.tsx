@@ -13,7 +13,7 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundAnswerModerationTemplate({ game, player, onModerateAnswer }: Props): JSX.Element {
+export default function RoundAnswerModerationTemplate({ game, player, onConfirmMarks, onModerateAnswer }: Props): JSX.Element {
 
   const message = player.isHost ? "As host, please moderate the default marking. Tap on an answer's mark on the right to update it." : "Waiting for the host to moderate the marking..."
 
@@ -73,6 +73,14 @@ export default function RoundAnswerModerationTemplate({ game, player, onModerate
             );
         }
       }}
+      action={player.isHost ? (
+        <button
+          className='btn btn-block'
+          onClick={onConfirmMarks}
+        >
+          Confirm marks
+        </button>
+      ) : undefined}
     />
   );
 }

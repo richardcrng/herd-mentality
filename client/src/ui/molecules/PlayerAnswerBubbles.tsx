@@ -4,6 +4,7 @@ import { MdSentimentNeutral as NeutralIcon } from "react-icons/md";
 import { Player } from "../../types/player.types";
 import { PlayerAnswer } from "../../types/round.types";
 import PlayerAnswerBubble from "../atoms/PlayerAnswerBubble";
+import { Fragment } from "react";
 
 export interface PlayerAnswerBubblesProps {
   answers: Record<string, PlayerAnswer>;
@@ -27,10 +28,9 @@ export default function PlayerAnswerBubbles({ answers, players, renderBubbleCont
         };
 
         return (
-          <>
+          <Fragment key={player.id}>
             <PlayerAnswerBubble
               className={classNames("col-start-1", `row-start-${idx + 1}`)}
-              key={player.id}
               player={player}
               footer={renderBubbleFooter && renderBubbleFooter(playerAnswer)}
             >
@@ -39,7 +39,7 @@ export default function PlayerAnswerBubbles({ answers, players, renderBubbleCont
             <Endmark style={{ opacity: renderBubbleEndmark ? 1 : 0 }}>
               {renderBubbleEndmark ? renderBubbleEndmark(playerAnswer) : <NeutralIcon size={32} />}
             </Endmark>
-          </>
+          </Fragment>
         );
       })}
     </Container>

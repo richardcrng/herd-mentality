@@ -132,7 +132,7 @@ export class GameManager {
   }
 
   public async drawNewPrompt(
-    currentPromptId: RoundPrompt["id"]
+    currentPromptId?: RoundPrompt["id"]
   ): Promise<void> {
     const questions = await getAllQuestions();
     const unfitQuestionIds = [...this.completedRoundIds(), currentPromptId];
@@ -249,6 +249,7 @@ export class GameManager {
             text: "",
             isLocked: false,
             isTyping: false,
+            mark: null
           }
         );
       } else {

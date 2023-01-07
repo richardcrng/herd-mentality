@@ -1,5 +1,5 @@
 import { ClientEventListeners } from "../../client/src/types/event.types";
-import { LockedPlayerAnswer, PlayerAnswer, RoundStatus } from "../../client/src/types/round.types";
+import { CompletedRound, LockedPlayerAnswer, PlayerAnswer, RoundStatus } from "../../client/src/types/round.types";
 import { GameManager } from "./game/manager";
 import { isEveryPlayerAnswerSubmitted } from '../../client/src/utils/game-utils';
 
@@ -9,11 +9,22 @@ export const approveCurrentPrompt: ClientEventListeners['APPROVE_CURRENT_PROMPT'
     g.round.ongoing.playerAnswers = Object.keys(g.players).reduce(
       (acc, playerId) => ({
         ...acc,
-        [playerId]: { playerId, isTyping: false, isLocked: false, text: '' }
+        [playerId]: { playerId, isTyping: false, isLocked: false, text: '', mark: null }
       }),
       {} as Record<string, PlayerAnswer>
     )
   })
+}
+
+export const confirmMarks: ClientEventListeners['CONFIRM_MARKS'] = (gameId) => {
+  const gameManager = GameManager.for(gameId)
+  gameManager.update(g => {
+    g.round.completed.push({
+      ...g.round.ongoing,
+      status: RoundStatus.COMPLETE
+    } as CompletedRound)
+  })
+  gameManager.drawNewPrompt()
 }
 
 export const createHostGame: ClientEventListeners["CREATE_HOST_GAME"] = (
