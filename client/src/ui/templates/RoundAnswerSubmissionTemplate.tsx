@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { IoSend as SendIcon } from 'react-icons/io5'
 // import { FiSend as SendIcon } from 'react-icons/fi'
 import { GameStateDerived } from "../../types/game.types"
@@ -13,6 +14,8 @@ interface Props extends GameOngoingHandlers {
 export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onLockAnswer, onPauseTyping }: Props): JSX.Element {
   const message = "Type your answer at the bottom"
   const playerAnswer = game.round.ongoing.playerAnswers[player.id]
+
+  const [typedAnswer, setTypedAnswer] = useState('')
 
   return (
     <RoundPageTemplate
@@ -35,16 +38,18 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
             type="text"
             disabled={playerAnswer?.isLocked}
             onChange={(e) => {
+              setTypedAnswer(e.target.value)
               onEditAnswer(e.target.value);
               setTimeout(() => {
                 onPauseTyping();
               }, 1000);
             }}
+            value={typedAnswer}
           />
           <button
             className='btn rounded-lg'
             onClick={onLockAnswer}
-            disabled={playerAnswer?.isLocked}
+            disabled={!typedAnswer || playerAnswer?.isLocked}
           >
             <SendIcon />
           </button>
