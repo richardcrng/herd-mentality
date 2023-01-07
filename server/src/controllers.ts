@@ -18,6 +18,10 @@ export const drawNewPrompt: ClientEventListeners['DRAW_NEW_PROMPT'] = (gameId, c
   GameManager.for(gameId).drawNewPrompt(currentPromptId)
 }
 
+export const editAnswer: ClientEventListeners['EDIT_ANSWER'] = (gameId, playerId, newAnswer) => {
+  GameManager.for(gameId).typeNewAnswerForPlayer(playerId, newAnswer)
+}
+
 export const getGame: ClientEventListeners["GET_GAME"] = (gameId) => {
   const gameManager = GameManager.for(gameId);
   if (gameManager.isRetrievable()) {
@@ -37,6 +41,10 @@ export const kickPlayer: ClientEventListeners["KICK_PLAYER"] = (
 ) => {
   GameManager.for(gameId).removePlayer(playerId);
 };
+
+export const pausePlayerTyping: ClientEventListeners['PAUSE_PLAYER_TYPING'] = (gameId, playerId) => {
+  GameManager.for(gameId).pausePlayerTyping(playerId)
+}
 
 export const startGame: ClientEventListeners["START_GAME"] = (gameId) => {
   GameManager.for(gameId).start();

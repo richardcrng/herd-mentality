@@ -7,9 +7,11 @@ import {
   approveCurrentPrompt,
   createHostGame,
   drawNewPrompt,
+  editAnswer,
   getGame,
   joinGame,
   kickPlayer,
+  pausePlayerTyping,
   startGame,
 } from "./controllers";
 
@@ -18,9 +20,11 @@ export const addListeners = (socket: ServerSocket): void => {
     APPROVE_CURRENT_PROMPT: approveCurrentPrompt,
     CREATE_HOST_GAME: createHostGame,
     DRAW_NEW_PROMPT: drawNewPrompt,
+    EDIT_ANSWER: editAnswer,
     GET_GAME: getGame,
     JOIN_GAME: joinGame,
     KICK_PLAYER: kickPlayer,
+    PAUSE_PLAYER_TYPING: pausePlayerTyping,
     START_GAME: startGame,
   };
 

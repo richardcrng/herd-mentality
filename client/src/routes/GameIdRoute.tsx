@@ -42,6 +42,12 @@ export default function GameIdRoute(): JSX.Element {
       onDrawNewPrompt={(currentPromptId) => {
         player.socket.emit('DRAW_NEW_PROMPT', gameId, currentPromptId)
       }}
+      onEditAnswer={(newAnswer) => {
+        player.socket.emit('EDIT_ANSWER', gameId, player.data.id, newAnswer)
+      }}
+      onPauseTyping={() => {
+        player.socket.emit('PAUSE_PLAYER_TYPING', gameId, player.data.id)
+      }}
     />
   );
 }

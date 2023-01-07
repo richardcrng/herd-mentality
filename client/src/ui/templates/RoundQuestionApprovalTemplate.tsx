@@ -18,10 +18,9 @@ export default function RoundQuestionApprovalTemplate({ game, player, onApproveP
     <RoundPageTemplate
       prompt={currentPrompt}
       message={message}
-      action={player.isHost ? ({ style }) => (
+      action={player.isHost ? (
         <div
           className='w-full btn-group btn-group-horizontal'
-          style={style}
         >
           <button
             className='btn btn-error w-1/2'

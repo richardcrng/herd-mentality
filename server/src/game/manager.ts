@@ -8,7 +8,6 @@ import {
 import { PlayerManager } from "../player/manager";
 import { Player } from "../../../client/src/types/player.types";
 import { RoundPrompt, RoundStatus } from "../../../client/src/types/round.types";
-import { QUESTIONS_ARR } from "../../../client/src/data/questions";
 import { getAllQuestions } from "../questions/manager";
 import { FamilyFeudProtoQA } from "../../../client/src/types/protoqa.types";
 
@@ -94,14 +93,14 @@ export class GameManager {
     });
   }
 
-  public completedRoundIds(): RoundPrompt['id'][] {
+  public completedRoundIds(): RoundPrompt["id"][] {
     return this.snapshot()?.round.completed.map((r) => r.prompt.id) ?? [];
   }
 
   public async createGameWithHost(host: Player): Promise<void> {
     // okay - it should exist
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const { metadata, question } = sample(await getAllQuestions())!
+    const { metadata, question } = sample(await getAllQuestions())!;
 
     const newGame: GameStateCore = {
       id: host.gameId,
@@ -115,7 +114,7 @@ export class GameManager {
             id: metadata.id,
             text: question.normalized,
           },
-          playerAnswers: {}
+          playerAnswers: {},
         },
         completed: [],
       },
@@ -128,23 +127,25 @@ export class GameManager {
     this.io.emit("HOST_GAME_CREATED", newGame, host.id);
   }
 
-  public async drawNewPrompt(currentPromptId: RoundPrompt['id']): Promise<void> {
+  public async drawNewPrompt(
+    currentPromptId: RoundPrompt["id"]
+  ): Promise<void> {
     const questions = await getAllQuestions();
-    const unfitQuestionIds = [
-      ...this.completedRoundIds(),
-      currentPromptId
-    ]
+    const unfitQuestionIds = [...this.completedRoundIds(), currentPromptId];
 
-    let nextRoundQuestion: FamilyFeudProtoQA | undefined
+    let nextRoundQuestion: FamilyFeudProtoQA | undefined;
 
     while (!nextRoundQuestion) {
       const possibleNextQuestion = sample(questions);
-      if (possibleNextQuestion && !unfitQuestionIds.includes(possibleNextQuestion.metadata.id)) {
-        nextRoundQuestion = possibleNextQuestion
+      if (
+        possibleNextQuestion &&
+        !unfitQuestionIds.includes(possibleNextQuestion.metadata.id)
+      ) {
+        nextRoundQuestion = possibleNextQuestion;
       }
     }
 
-    this.replaceCurrentQuestion(nextRoundQuestion)
+    this.replaceCurrentQuestion(nextRoundQuestion);
   }
 
   public getHostPlayer(): Player | undefined {
@@ -195,6 +196,16 @@ export class GameManager {
     }
   }
 
+  public pausePlayerTyping(playerId: string): void {
+    this._mutate(g => {
+      g.round.ongoing.playerAnswers[playerId] = {
+        isLocked: false,
+        isTyping: false,
+        text: g.round.ongoing.playerAnswers[playerId]?.text ?? ''
+      };
+    })
+  }
+
   public playerIds(): string[] {
     return Object.keys(this.players());
   }
@@ -216,23 +227,25 @@ export class GameManager {
   }
 
   public replaceCurrentQuestion(newQuestion: FamilyFeudProtoQA): void {
-    this._mutate(g => {
+    this._mutate((g) => {
       g.round.ongoing = {
         status: RoundStatus.QUESTION_APPROVAL,
         prompt: {
           id: newQuestion.metadata.id,
-          text: newQuestion.question.normalized
+          text: newQuestion.question.normalized,
         },
-        playerAnswers: {}
-      }
-    })
+        playerAnswers: {},
+      };
+    });
   }
 
   public set(game: GameStateCore): void {
     this._set(game);
   }
 
-  public setWithPointer(cb: (gamePointer: GameStateCore) => GameStateCore): void {
+  public setWithPointer(
+    cb: (gamePointer: GameStateCore) => GameStateCore
+  ): void {
     this._withPointer((pointer) => {
       this.set(cb(pointer));
     });
@@ -248,6 +261,18 @@ export class GameManager {
   public start(): void {
     this._mutate((g) => {
       g.status = GameStatus.ONGOING;
+    });
+  }
+
+  public typeNewAnswerForPlayer(playerId: string, newAnswer: string): void {
+    this._mutate((g) => {
+      if (g.round.ongoing.playerAnswers) {
+        g.round.ongoing.playerAnswers[playerId] = {
+          isLocked: false,
+          isTyping: true,
+          text: newAnswer,
+        };
+      }
     });
   }
 
