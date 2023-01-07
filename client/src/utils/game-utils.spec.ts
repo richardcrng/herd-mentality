@@ -1,7 +1,78 @@
 import { AnswerMark } from "../types/round.types";
-import { getPinkCowPlayerId } from "./game-utils";
+import { findCurrentPinkCowPlayerId, calculatePlayerScores } from "./game-utils";
 
-describe('getPinkCowPlayerId', () => {
+
+describe("calculatePlayerScores", () => {
+  it("avoids mutating original array", () => {
+    const rounds: {
+      playerAnswers: Record<string, { mark: AnswerMark }>;
+    }[] = [
+      {
+        playerAnswers: {
+          a: { mark: AnswerMark.HERD },
+          b: { mark: AnswerMark.HERD },
+          c: { mark: AnswerMark.PINK_COW },
+          d: { mark: AnswerMark.HERD },
+        },
+      },
+    ];
+
+    calculatePlayerScores(rounds);
+
+    expect(rounds).toMatchObject([
+      {
+        playerAnswers: {
+          a: { mark: AnswerMark.HERD },
+          b: { mark: AnswerMark.HERD },
+          c: { mark: AnswerMark.PINK_COW },
+          d: { mark: AnswerMark.HERD },
+        },
+      },
+    ]);
+  });
+
+  it("scores a player one point for each herd", () => {
+    const rounds: {
+      playerAnswers: Record<string, { mark: AnswerMark | null }>;
+    }[] = [
+      {
+        playerAnswers: {
+          a: { mark: AnswerMark.HERD },
+          b: { mark: AnswerMark.HERD },
+          c: { mark: AnswerMark.PINK_COW },
+          d: { mark: AnswerMark.HERD },
+        },
+      },
+      {
+        playerAnswers: {
+          a: { mark: AnswerMark.HERD },
+          b: { mark: null },
+          c: { mark: null },
+          d: { mark: AnswerMark.HERD },
+        },
+      },
+      {
+        playerAnswers: {
+          a: { mark: AnswerMark.HERD },
+          b: { mark: AnswerMark.HERD },
+          c: { mark: null },
+          d: { mark: AnswerMark.PINK_COW },
+        },
+      },
+    ];
+
+    const scores = calculatePlayerScores(rounds);
+
+    expect(scores).toMatchObject({
+      a: 3,
+      b: 2,
+      c: 0,
+      d: 2
+    });
+  });
+});
+
+describe('findCurrentPinkCowPlayerId', () => {
   it('avoids mutating original array', () => {
     const rounds: {
       playerAnswers: Record<string, { mark: AnswerMark }>;
@@ -16,7 +87,7 @@ describe('getPinkCowPlayerId', () => {
       },
     ];
 
-    getPinkCowPlayerId(rounds)
+    findCurrentPinkCowPlayerId(rounds)
 
     expect(rounds).toMatchObject([
       {
@@ -44,7 +115,7 @@ describe('getPinkCowPlayerId', () => {
       },
     ];
 
-    const res = getPinkCowPlayerId(rounds);
+    const res = findCurrentPinkCowPlayerId(rounds);
 
     expect(res).toBe('c');
   });
@@ -71,7 +142,7 @@ describe('getPinkCowPlayerId', () => {
       },
     ];
 
-    const res = getPinkCowPlayerId(rounds);
+    const res = findCurrentPinkCowPlayerId(rounds);
 
     expect(res).toBe("c");
   });
@@ -98,7 +169,7 @@ describe('getPinkCowPlayerId', () => {
       },
     ];
 
-    const res = getPinkCowPlayerId(rounds);
+    const res = findCurrentPinkCowPlayerId(rounds);
 
     expect(res).toBeNull();
   });
