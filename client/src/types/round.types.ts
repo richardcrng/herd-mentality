@@ -27,6 +27,7 @@ export interface PlayerAnswer {
   text: string;
   isTyping: boolean;
   isLocked: boolean;
+  mark?: AnswerMark | null;
 }
 
 export interface LockedPlayerAnswer extends PlayerAnswer {

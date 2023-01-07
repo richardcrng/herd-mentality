@@ -1,11 +1,13 @@
 import { PropsWithChildren } from "react";
 import { Player } from "../../types/player.types";
+import { PlayerAnswer } from "../../types/round.types";
 
-type Props = PropsWithChildren<{
+type Props<A extends PlayerAnswer> = PropsWithChildren<{
   player: Player;
+  footer?: JSX.Element | null;
 }>
 
-export default function PlayerAnswerBubble({ children, player }: Props): JSX.Element {
+export default function PlayerAnswerBubble<A extends PlayerAnswer>({ children, player, footer }: Props<A>): JSX.Element {
   return (
     <div className="chat chat-start">
       <div className="chat-image avatar">
@@ -17,7 +19,7 @@ export default function PlayerAnswerBubble({ children, player }: Props): JSX.Ele
         {player.name}
       </div>
       <div className="chat-bubble" style={{ opacity: children ? 1 : 0 }}>{children}</div>
-      {/* <div className="chat-footer opacity-50">Delivered</div> */}
+      <div className="chat-footer" style={{ opacity: footer ? 1 : 0 }}>{footer}</div>
     </div>
   );
 }

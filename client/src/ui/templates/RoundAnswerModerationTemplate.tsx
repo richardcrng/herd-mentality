@@ -1,6 +1,8 @@
 import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
+import { AnswerMark } from "../../types/round.types";
+import PinkCow from "../atoms/PinkCow";
 import RoundPageTemplate from "./RoundPageTemplate";
 
 interface Props extends GameOngoingHandlers {
@@ -18,24 +20,19 @@ export default function RoundAnswerModerationTemplate({ game, player }: Props): 
       message={message}
       players={game.players}
       renderBubbleContent={(playerAnswer) => <span>{playerAnswer.text}</span>}
-      //   action={player.isHost ? (
-      //     <div
-      //       className='w-full btn-group btn-group-horizontal'
-      //     >
-      //       <button
-      //         className='btn btn-error w-1/2'
-      //         onClick={() => onDrawNewPrompt(currentPrompt.id)}
-      //       >
-      //         Draw new
-      //       </button>
-      //       <button
-      //         className='btn btn-success w-1/2'
-      //         onClick={onApprovePrompt}
-      //       >
-      //         Approve
-      //       </button>
-      //     </div>
-      //   ) : undefined}
+      renderBubbleFooter={(playerAnswer) => {
+        switch (playerAnswer.mark) {
+          case AnswerMark.HERD:
+            return <span>🏅</span>;
+          case AnswerMark.PINK_COW:
+            return <PinkCow />;
+
+          default:
+            return <PinkCow />;
+
+            // return null
+        }
+      }}
     />
   );
 }
