@@ -16,7 +16,7 @@ export default function PlayerAnswerBubble({ children, player }: Props): JSX.Ele
       <div className="chat-header">
         {player.name}
       </div>
-      <div className="chat-bubble">{children}</div>
+      <div className="chat-bubble" style={{ opacity: children ? 1 : 0 }}>{children}</div>
       {/* <div className="chat-footer opacity-50">Delivered</div> */}
     </div>
   );

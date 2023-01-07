@@ -1,4 +1,5 @@
-import { FiSend as SendIcon } from 'react-icons/fi'
+import { IoSend as SendIcon } from 'react-icons/io5'
+// import { FiSend as SendIcon } from 'react-icons/fi'
 import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
@@ -9,7 +10,7 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onPauseTyping }: Props): JSX.Element {
+export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onLockAnswer, onPauseTyping }: Props): JSX.Element {
   const message = "Type your answer at the bottom"
 
   return (
@@ -17,9 +18,15 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
       round={game.round.ongoing}
       message={message}
       players={game.players}
-      renderBubbleContent={(playerAnswer) => (
-        <span>{playerAnswer.isTyping ? "..." : ""}</span>
-      )}
+      renderBubbleContent={(playerAnswer) => {
+        if (playerAnswer.isLocked) {
+          return <span>{"📩"}</span>;
+        } else if (playerAnswer.isTyping) {
+          return <span>{playerAnswer.isTyping ? "..." : ""}</span>;
+        } else {
+          return null
+        }
+      }}
       action={
         <div className='w-full flex gap-x-2'>
           <input
@@ -32,7 +39,7 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
               }, 1000);
             }}
           />
-          <button className='btn rounded-lg'>
+          <button className='btn rounded-lg' onClick={onLockAnswer}>
             <SendIcon />
           </button>
         </div>

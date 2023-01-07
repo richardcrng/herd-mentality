@@ -19,7 +19,11 @@ export const drawNewPrompt: ClientEventListeners['DRAW_NEW_PROMPT'] = (gameId, c
 }
 
 export const editAnswer: ClientEventListeners['EDIT_ANSWER'] = (gameId, playerId, newAnswer) => {
-  GameManager.for(gameId).typeNewAnswerForPlayer(playerId, newAnswer)
+  GameManager.for(gameId).setPlayerAnswer(playerId, {
+    isLocked: false,
+    isTyping: true,
+    text: newAnswer
+  })
 }
 
 export const getGame: ClientEventListeners["GET_GAME"] = (gameId) => {
@@ -42,8 +46,15 @@ export const kickPlayer: ClientEventListeners["KICK_PLAYER"] = (
   GameManager.for(gameId).removePlayer(playerId);
 };
 
+export const lockAnswer: ClientEventListeners['LOCK_ANSWER'] = (gameId, playerId) => {
+  GameManager.for(gameId).setPlayerAnswer(playerId, (prevAnswer) => ({
+    ...prevAnswer,
+    isLocked: true,
+  }))
+}
+
 export const pausePlayerTyping: ClientEventListeners['PAUSE_PLAYER_TYPING'] = (gameId, playerId) => {
-  GameManager.for(gameId).pausePlayerTyping(playerId)
+  GameManager.for(gameId).setPlayerAnswer(playerId, (prevAnswer) => ({ ...prevAnswer, isTyping: false }))
 }
 
 export const startGame: ClientEventListeners["START_GAME"] = (gameId) => {

@@ -9,5 +9,6 @@ export interface GameOngoingHandlers {
   onApprovePrompt(): void;
   onDrawNewPrompt(currentPromptId: RoundPrompt['id']): void;
   onEditAnswer(newAnswer: string): void;
+  onLockAnswer(): void;
   onPauseTyping(): void;
 }
