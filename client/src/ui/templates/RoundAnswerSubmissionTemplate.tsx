@@ -21,9 +21,9 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
           type="text"
           onChange={(e) => {
             onEditAnswer(e.target.value);
-            // setTimeout(() => {
-
-            // })
+            setTimeout(() => {
+              onPauseTyping()
+            }, 1000)
           }}
         />
       }
