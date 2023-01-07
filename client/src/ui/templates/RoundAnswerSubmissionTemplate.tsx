@@ -1,3 +1,4 @@
+import { FiSend as SendIcon } from 'react-icons/fi'
 import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
@@ -17,19 +18,24 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
       message={message}
       players={game.players}
       renderBubbleContent={(playerAnswer) => (
-        <span>{playerAnswer.isTyping ? '...' : ''}</span>
+        <span>{playerAnswer.isTyping ? "..." : ""}</span>
       )}
       action={
-        <input
-          className="input w-full input-bordered input-info"
-          type="text"
-          onChange={(e) => {
-            onEditAnswer(e.target.value);
-            setTimeout(() => {
-              onPauseTyping();
-            }, 1000);
-          }}
-        />
+        <div className='w-full flex gap-x-2'>
+          <input
+            className="input rounded-lg grow input-bordered input-info"
+            type="text"
+            onChange={(e) => {
+              onEditAnswer(e.target.value);
+              setTimeout(() => {
+                onPauseTyping();
+              }, 1000);
+            }}
+          />
+          <button className='btn rounded-lg'>
+            <SendIcon />
+          </button>
+        </div>
       }
     />
   );
