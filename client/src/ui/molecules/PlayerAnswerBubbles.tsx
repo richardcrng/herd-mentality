@@ -16,7 +16,13 @@ export interface PlayerAnswerBubblesProps {
 }
 
 export default function PlayerAnswerBubbles({ answers, pinkCowPlayerId, players, renderBubbleContent, renderBubbleFooter, renderBubbleEndmark }: PlayerAnswerBubblesProps): JSX.Element {
-  const playerData = Object.values(players)
+  const playerData = Object.values(players).sort((a, b) => {
+    if (a.id === pinkCowPlayerId) {
+      return -1
+    } else if (b.id === pinkCowPlayerId) {
+      return 1
+    } else return b.score - a.score
+  })
 
   return (
     <Container className={`grid-rows-${playerData.length}`}>
