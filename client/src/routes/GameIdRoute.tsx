@@ -48,6 +48,9 @@ export default function GameIdRoute(): JSX.Element {
       onLockAnswer={() => {
         player.socket.emit('LOCK_ANSWER', gameId, player.data.id)
       }}
+      onModerateAnswer={(playerId, newMark) => {
+        player.socket.emit('MODERATE_ANSWER_MARK', gameId, playerId, newMark)
+      }}
       onPauseTyping={() => {
         player.socket.emit('PAUSE_PLAYER_TYPING', gameId, player.data.id)
       }}

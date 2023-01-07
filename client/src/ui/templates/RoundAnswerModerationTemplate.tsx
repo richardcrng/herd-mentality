@@ -1,8 +1,10 @@
+import { MdSentimentNeutral as NeutralIcon } from 'react-icons/md'
+import { GiPodiumWinner as WinnerIcon } from "react-icons/gi";
+import { SiHappycow as CowIcon } from "react-icons/si";
 import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import { AnswerMark } from "../../types/round.types";
-import PinkCow from "../atoms/PinkCow";
 import RoundPageTemplate from "./RoundPageTemplate";
 
 interface Props extends GameOngoingHandlers {
@@ -10,9 +12,13 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundAnswerModerationTemplate({ game, player }: Props): JSX.Element {
+export default function RoundAnswerModerationTemplate({ game, player, onModerateAnswer }: Props): JSX.Element {
 
   const message = player.isHost ? "As host, please moderate the default marking. Tap on an answer to update its marking." : "Waiting for the host to moderate the marking..."
+
+  const createMarkHandler = (playerId: string, newMark: AnswerMark | null) => () => {
+    onModerateAnswer(playerId, newMark)
+  }
 
   return (
     <RoundPageTemplate
@@ -20,17 +26,38 @@ export default function RoundAnswerModerationTemplate({ game, player }: Props): 
       message={message}
       players={game.players}
       renderBubbleContent={(playerAnswer) => <span>{playerAnswer.text}</span>}
-      renderBubbleFooter={(playerAnswer) => {
+      renderBubbleEndmark={(playerAnswer) => {
         switch (playerAnswer.mark) {
           case AnswerMark.HERD:
-            return <span>🏅</span>;
+            return (
+              <button className="btn btn-outline" onClick={createMarkHandler(playerAnswer.playerId, AnswerMark.PINK_COW)}>
+                <WinnerIcon size={32} />
+              </button>
+            );
+
           case AnswerMark.PINK_COW:
-            return <PinkCow />;
+            return (
+              <button className="btn btn-[pink] btn-outline">
+                <CowIcon
+                  size={32}
+                  onClick={createMarkHandler(
+                    playerAnswer.playerId,
+                    null
+                  )}
+                />
+              </button>
+            );
 
-          default:
-            return <PinkCow />;
-
-            // return null
+          case undefined:
+          case null:
+            return (
+              <button
+                className="btn btn-outline"
+                onClick={createMarkHandler(playerAnswer.playerId, AnswerMark.HERD)}
+              >
+                <NeutralIcon size={32} />
+              </button>
+            );
         }
       }}
     />

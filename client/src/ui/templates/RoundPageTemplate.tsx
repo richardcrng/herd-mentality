@@ -8,18 +8,19 @@ interface Props {
   message: string | JSX.Element;
   action?: JSX.Element;
   players: Record<string, Player>;
-  renderBubbleContent?: PlayerAnswerBubblesProps['renderBubbleContent'];
-  renderBubbleFooter?: PlayerAnswerBubblesProps['renderBubbleFooter']
+  renderBubbleContent?: PlayerAnswerBubblesProps["renderBubbleContent"];
+  renderBubbleEndmark?: PlayerAnswerBubblesProps["renderBubbleEndmark"];
+  renderBubbleFooter?: PlayerAnswerBubblesProps["renderBubbleFooter"];
 }
 
-export default function RoundPageTemplate({ message, round, action, players, renderBubbleContent, renderBubbleFooter }: Props): JSX.Element {
+export default function RoundPageTemplate({ message, round, action, players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }: Props): JSX.Element {
   return (
     <Container>
       <QuestionText>{round.prompt.text}</QuestionText>
       <Message>{message}</Message>
       <PlayerData>
         <PlayerAnswerBubbles
-          {...{ players, renderBubbleContent, renderBubbleFooter }}
+          {...{ players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }}
           answers={round.playerAnswers}
         />
         {/* <pre>{JSON.stringify(round.playerAnswers, null, 2)}</pre> */}

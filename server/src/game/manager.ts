@@ -245,6 +245,7 @@ export class GameManager {
       if (typeof setAnswer === "function") {
         g.round.ongoing.playerAnswers[playerId] = setAnswer(
           g.round.ongoing.playerAnswers[playerId] ?? {
+            playerId,
             text: "",
             isLocked: false,
             isTyping: false,

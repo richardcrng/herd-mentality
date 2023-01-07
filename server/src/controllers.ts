@@ -7,9 +7,9 @@ export const approveCurrentPrompt: ClientEventListeners['APPROVE_CURRENT_PROMPT'
   GameManager.for(gameId).update(g => {
     g.round.ongoing.status = RoundStatus.ANSWER_SUBMISSIONS
     g.round.ongoing.playerAnswers = Object.keys(g.players).reduce(
-      (acc, curr) => ({
+      (acc, playerId) => ({
         ...acc,
-        [curr]: { isTyping: false, isLocked: false, text: '' }
+        [playerId]: { playerId, isTyping: false, isLocked: false, text: '' }
       }),
       {} as Record<string, PlayerAnswer>
     )
@@ -28,6 +28,7 @@ export const drawNewPrompt: ClientEventListeners['DRAW_NEW_PROMPT'] = (gameId, c
 
 export const editAnswer: ClientEventListeners['EDIT_ANSWER'] = (gameId, playerId, newAnswer) => {
   GameManager.for(gameId).setPlayerAnswer(playerId, {
+    playerId,
     isLocked: false,
     isTyping: true,
     text: newAnswer
@@ -76,6 +77,13 @@ export const lockAnswer: ClientEventListeners['LOCK_ANSWER'] = (gameId, playerId
       }
     }
   })
+}
+
+export const moderateAnswerMark: ClientEventListeners['MODERATE_ANSWER_MARK'] = (gameId, playerId, mark) => {
+  GameManager.for(gameId).setPlayerAnswer(playerId, (prev) => ({
+    ...prev,
+    mark
+  }))
 }
 
 export const pausePlayerTyping: ClientEventListeners['PAUSE_PLAYER_TYPING'] = (gameId, playerId) => {

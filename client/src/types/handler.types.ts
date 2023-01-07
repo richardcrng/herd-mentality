@@ -1,4 +1,4 @@
-import { RoundPrompt } from "./round.types";
+import { AnswerMark, RoundPrompt } from "./round.types";
 
 export interface LobbyHandlers {
   onGameStart(): void;
@@ -11,4 +11,5 @@ export interface GameOngoingHandlers {
   onEditAnswer(newAnswer: string): void;
   onLockAnswer(): void;
   onPauseTyping(): void;
+  onModerateAnswer(playerId: string, newMark: AnswerMark | null): void;
 }

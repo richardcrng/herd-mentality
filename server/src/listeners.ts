@@ -12,6 +12,7 @@ import {
   joinGame,
   kickPlayer,
   lockAnswer,
+  moderateAnswerMark,
   pausePlayerTyping,
   startGame,
 } from "./controllers";
@@ -26,6 +27,7 @@ export const addListeners = (socket: ServerSocket): void => {
     JOIN_GAME: joinGame,
     LOCK_ANSWER: lockAnswer,
     KICK_PLAYER: kickPlayer,
+    MODERATE_ANSWER_MARK: moderateAnswerMark,
     PAUSE_PLAYER_TYPING: pausePlayerTyping,
     START_GAME: startGame,
   };

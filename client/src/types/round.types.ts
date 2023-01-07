@@ -24,6 +24,7 @@ interface RoundBase {
 }
 
 export interface PlayerAnswer {
+  playerId: string;
   text: string;
   isTyping: boolean;
   isLocked: boolean;
