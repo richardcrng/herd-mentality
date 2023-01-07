@@ -16,6 +16,9 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
       round={game.round.ongoing}
       message={message}
       players={game.players}
+      renderBubbleContent={(playerAnswer) => (
+        <span>{playerAnswer.isTyping ? '...' : ''}</span>
+      )}
       action={
         <input
           className="input w-full input-bordered input-info"
@@ -23,8 +26,8 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
           onChange={(e) => {
             onEditAnswer(e.target.value);
             setTimeout(() => {
-              onPauseTyping()
-            }, 1000)
+              onPauseTyping();
+            }, 1000);
           }}
         />
       }

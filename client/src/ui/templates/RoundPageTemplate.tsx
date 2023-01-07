@@ -1,22 +1,26 @@
 import styled from "styled-components";
 import { Player } from "../../types/player.types";
 import { OngoingRound } from "../../types/round.types";
-import PlayerAnswerBubbles from "../molecules/PlayerAnswerBubbles";
+import PlayerAnswerBubbles, { PlayerAnswerBubblesProps } from "../molecules/PlayerAnswerBubbles";
 
 interface Props {
   round: OngoingRound;
   message: string;
   action?: JSX.Element;
-  players: Record<string, Player>
+  players: Record<string, Player>;
+  renderBubbleContent?: PlayerAnswerBubblesProps['renderBubbleContent']
 }
 
-export default function RoundPageTemplate({ message, round, action, players }: Props): JSX.Element {
+export default function RoundPageTemplate({ message, round, action, players, renderBubbleContent }: Props): JSX.Element {
   return (
     <Container>
       <QuestionText>{round.prompt.text}</QuestionText>
       <Message>{message}</Message>
       <PlayerData>
-        <PlayerAnswerBubbles players={players} answers={round.playerAnswers} />
+        <PlayerAnswerBubbles
+          {...{ players, renderBubbleContent }}
+          answers={round.playerAnswers}
+        />
         {/* <pre>{JSON.stringify(round.playerAnswers, null, 2)}</pre> */}
       </PlayerData>
       {action && <Action className='w-full'>{action}</Action>}
