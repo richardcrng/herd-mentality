@@ -18,6 +18,7 @@ export default function RoundQuestionApprovalTemplate({ game, player, onApproveP
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
+      pinkCowPlayerId={game.pinkCowPlayerId}
       players={game.players}
       action={player.isHost ? (
         <div

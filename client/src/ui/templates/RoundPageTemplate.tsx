@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Player } from "../../types/player.types";
+import { ScoredPlayer } from "../../types/player.types";
 import { OngoingRound } from "../../types/round.types";
 import PlayerAnswerBubbles, { PlayerAnswerBubblesProps } from "../molecules/PlayerAnswerBubbles";
 
@@ -7,20 +7,21 @@ interface Props {
   round: OngoingRound;
   message: string | JSX.Element;
   action?: JSX.Element;
-  players: Record<string, Player>;
+  pinkCowPlayerId: string | null;
+  players: Record<string, ScoredPlayer>;
   renderBubbleContent?: PlayerAnswerBubblesProps["renderBubbleContent"];
   renderBubbleEndmark?: PlayerAnswerBubblesProps["renderBubbleEndmark"];
   renderBubbleFooter?: PlayerAnswerBubblesProps["renderBubbleFooter"];
 }
 
-export default function RoundPageTemplate({ message, round, action, players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }: Props): JSX.Element {
+export default function RoundPageTemplate({ message, round, action, pinkCowPlayerId, players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }: Props): JSX.Element {
   return (
     <Container>
       <QuestionText>{round.prompt.text}</QuestionText>
       <Message>{message}</Message>
       <PlayerData>
         <PlayerAnswerBubbles
-          {...{ players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }}
+          {...{ players, pinkCowPlayerId, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }}
           answers={round.playerAnswers}
         />
         {/* <pre>{JSON.stringify(round.playerAnswers, null, 2)}</pre> */}
@@ -31,7 +32,7 @@ export default function RoundPageTemplate({ message, round, action, players, ren
 }
 
 const Container = styled.div.attrs({
-  className: 'grid h-full'
+  className: 'grid h-full gap-y-4'
 })`
   grid-template-areas:
     "question-text"

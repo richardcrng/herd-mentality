@@ -1,16 +1,18 @@
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
-import { Player } from "../../types/player.types";
+import { ScoredPlayer } from "../../types/player.types";
 
 type Props = PropsWithChildren<{
   className?: string;
-  player: Player;
+  isPinkCow?: boolean;
   footer?: JSX.Element | null;
+  player: ScoredPlayer;
 }>
 
-export default function PlayerAnswerBubble({ className, children, player, footer }: Props): JSX.Element {
+export default function PlayerAnswerBubble({ className, children, isPinkCow, player, footer }: Props): JSX.Element {
   return (
     <div className={classNames("chat chat-start", className)}>
+      <div className='col-start-1 row-start-1 w-full flex justify-center'>{player.score}</div>
       <div className="chat-image avatar">
         <div className="w-10 rounded-full">
           <img alt="placeholder" src="https://placeimg.com/192/192/people" />

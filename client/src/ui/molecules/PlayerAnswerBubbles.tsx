@@ -1,20 +1,21 @@
 import classNames from "classnames";
 import styled from "styled-components";
 import { MdSentimentNeutral as NeutralIcon } from "react-icons/md";
-import { Player } from "../../types/player.types";
+import { ScoredPlayer } from "../../types/player.types";
 import { PlayerAnswer } from "../../types/round.types";
 import PlayerAnswerBubble from "../atoms/PlayerAnswerBubble";
 import { Fragment } from "react";
 
 export interface PlayerAnswerBubblesProps {
   answers: Record<string, PlayerAnswer>;
-  players: Record<string, Player>;
+  players: Record<string, ScoredPlayer>;
+  pinkCowPlayerId: string | null;
   renderBubbleContent?(playerAnswer: PlayerAnswer): JSX.Element | null;
   renderBubbleFooter?(playerAnswer: PlayerAnswer): JSX.Element | null;
   renderBubbleEndmark?(playerAnswer: PlayerAnswer): JSX.Element | null;
 }
 
-export default function PlayerAnswerBubbles({ answers, players, renderBubbleContent, renderBubbleFooter, renderBubbleEndmark }: PlayerAnswerBubblesProps): JSX.Element {
+export default function PlayerAnswerBubbles({ answers, pinkCowPlayerId, players, renderBubbleContent, renderBubbleFooter, renderBubbleEndmark }: PlayerAnswerBubblesProps): JSX.Element {
   const playerData = Object.values(players)
 
   return (
@@ -32,6 +33,7 @@ export default function PlayerAnswerBubbles({ answers, players, renderBubbleCont
             <PlayerAnswerBubble
               className={classNames("col-start-1", `row-start-${idx + 1}`)}
               player={player}
+              isPinkCow={player.id === pinkCowPlayerId}
               footer={renderBubbleFooter && renderBubbleFooter(playerAnswer)}
             >
               {renderBubbleContent && renderBubbleContent(playerAnswer)}

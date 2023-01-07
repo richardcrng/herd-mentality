@@ -25,6 +25,7 @@ export default function RoundAnswerModerationTemplate({ game, player, onConfirmM
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
+      pinkCowPlayerId={game.pinkCowPlayerId}
       players={game.players}
       renderBubbleContent={(playerAnswer) => <span>{playerAnswer.text}</span>}
       renderBubbleEndmark={(playerAnswer) => {

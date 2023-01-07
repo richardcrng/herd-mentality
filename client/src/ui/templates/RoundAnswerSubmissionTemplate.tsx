@@ -21,6 +21,7 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
+      pinkCowPlayerId={game.pinkCowPlayerId}
       players={game.players}
       renderBubbleContent={(playerAnswer) => {
         if (playerAnswer.isLocked) {
@@ -28,17 +29,17 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
         } else if (playerAnswer.isTyping) {
           return <span>{playerAnswer.isTyping ? "..." : ""}</span>;
         } else {
-          return null
+          return null;
         }
       }}
       action={
-        <div className='w-full flex gap-x-2'>
+        <div className="w-full flex gap-x-2">
           <input
             className="input rounded-lg grow input-bordered input-info"
             type="text"
             disabled={playerAnswer?.isLocked}
             onChange={(e) => {
-              setTypedAnswer(e.target.value)
+              setTypedAnswer(e.target.value);
               onEditAnswer(e.target.value);
               setTimeout(() => {
                 onPauseTyping();
@@ -47,7 +48,7 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
             value={typedAnswer}
           />
           <button
-            className='btn rounded-lg'
+            className="btn rounded-lg"
             onClick={onLockAnswer}
             disabled={!typedAnswer || playerAnswer?.isLocked}
           >
