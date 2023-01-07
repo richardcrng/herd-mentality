@@ -16,7 +16,7 @@ export default function RoundQuestionApprovalTemplate({ game, player, onApproveP
 
   return (
     <RoundPageTemplate
-      prompt={currentPrompt}
+      round={game.round.ongoing}
       message={message}
       action={player.isHost ? (
         <div

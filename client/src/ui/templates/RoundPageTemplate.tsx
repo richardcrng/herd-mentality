@@ -1,17 +1,20 @@
 import styled from "styled-components";
-import { RoundPrompt } from "../../types/round.types";
+import { OngoingRound } from "../../types/round.types";
 
 interface Props {
-  prompt: RoundPrompt;
+  round: OngoingRound;
   message: string;
   action?: JSX.Element;
 }
 
-export default function RoundPageTemplate({ message, prompt, action }: Props): JSX.Element {
+export default function RoundPageTemplate({ message, round, action }: Props): JSX.Element {
   return (
     <Container>
-      <QuestionText>{prompt.text}</QuestionText>
+      <QuestionText>{round.prompt.text}</QuestionText>
       <Message>{message}</Message>
+      <PlayerData>
+        <pre>{JSON.stringify(round.playerAnswers, null, 2)}</pre>
+      </PlayerData>
       {action && <Action className='w-full'>{action}</Action>}
     </Container>
   );
@@ -37,6 +40,10 @@ const QuestionText = styled.h1.attrs({
 
 const Message = styled.p`
   grid-area: message;
+`
+
+const PlayerData = styled.div`
+  grid-area: player-data;
 `
 
 const Action = styled.div`

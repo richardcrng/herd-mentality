@@ -2,22 +2,18 @@ import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import RoundPageTemplate from "./RoundPageTemplate";
-import { useState } from 'react';
 
 interface Props extends GameOngoingHandlers {
   game: GameStateDerived;
   player: Player;
 }
 
-export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer }: Props): JSX.Element {
-
-  const currentPrompt = game.round.ongoing.prompt;
-
+export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onPauseTyping }: Props): JSX.Element {
   const message = "Type your answer at the bottom"
 
   return (
     <RoundPageTemplate
-      prompt={currentPrompt}
+      round={game.round.ongoing}
       message={message}
       action={
         <input
@@ -25,6 +21,9 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
           type="text"
           onChange={(e) => {
             onEditAnswer(e.target.value);
+            // setTimeout(() => {
+
+            // })
           }}
         />
       }
