@@ -12,6 +12,7 @@ interface Props extends GameOngoingHandlers {
 
 export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onLockAnswer, onPauseTyping }: Props): JSX.Element {
   const message = "Type your answer at the bottom"
+  const playerAnswer = game.round.ongoing.playerAnswers[player.id]
 
   return (
     <RoundPageTemplate
@@ -32,6 +33,7 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
           <input
             className="input rounded-lg grow input-bordered input-info"
             type="text"
+            disabled={playerAnswer?.isLocked}
             onChange={(e) => {
               onEditAnswer(e.target.value);
               setTimeout(() => {
@@ -39,7 +41,11 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
               }, 1000);
             }}
           />
-          <button className='btn rounded-lg' onClick={onLockAnswer}>
+          <button
+            className='btn rounded-lg'
+            onClick={onLockAnswer}
+            disabled={playerAnswer?.isLocked}
+          >
             <SendIcon />
           </button>
         </div>
