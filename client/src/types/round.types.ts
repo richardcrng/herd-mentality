@@ -1,11 +1,14 @@
-interface RoundPrompt {
-  id: string;
+import { ProtoQAId } from "./protoqa.types";
+
+export interface RoundPrompt {
+  id: ProtoQAId;
   text: string;
 }
 
 export enum RoundStatus {
-  SUBMITTING = "players-submitting",
-  MODERATION = "host-moderation",
+  QUESTION_APPROVAL = "host-question-approval",
+  ANSWER_SUBMISSIONS = "players-submitting",
+  ANSWER_MODERATION = "host-answer-moderation",
   COMPLETE = "complete",
 }
 
@@ -33,15 +36,19 @@ export interface MarkedPlayerAnswer extends PlayerAnswer {
   mark: AnswerMark;
 }
 
-export type OngoingRound = RoundInSubmitting | RoundInModeration
+export type OngoingRound = RoundInQuestionApproval | RoundInSubmitting | RoundInModeration
 export type Round = OngoingRound | CompletedRound
 
+export interface RoundInQuestionApproval extends RoundBase {
+  status: RoundStatus.QUESTION_APPROVAL;
+}
+
 export interface RoundInSubmitting extends RoundBase {
-  status: RoundStatus.SUBMITTING;
+  status: RoundStatus.ANSWER_SUBMISSIONS;
 }
 
 export interface RoundInModeration extends RoundBase {
-  status: RoundStatus.MODERATION;
+  status: RoundStatus.ANSWER_MODERATION;
   playerAnswers: Record<string, MarkedPlayerAnswer>;
 }
 

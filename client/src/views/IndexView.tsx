@@ -22,7 +22,7 @@ export default function IndexView({ onHostNew, onNavigateToHostGame, onNavigateT
   
   return (
     <IntroFrame className="flex flex-col justify-between items-center text-center">
-      <p className="text-xl">{"A party game for families, friends and cow rustlers. The aim of the game is simple: think like the herd and write down the same answers as your friends."}</p>
+      <p className="text-md md:text-xl md:p-4">{"A party game for families, friends and cow rustlers. The aim of the game is simple: think like the herd and write down the same answers as your friends."}</p>
       <div className="w-full flex flex-col gap-y-2">
         <button
           className="btn btn-primary btn-block btn-xl"
