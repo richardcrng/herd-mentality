@@ -1,10 +1,18 @@
 import { ClientEventListeners } from "../../client/src/types/event.types";
-import { RoundStatus } from "../../client/src/types/round.types";
+import { LockedPlayerAnswer, PlayerAnswer, RoundStatus } from "../../client/src/types/round.types";
 import { GameManager } from "./game/manager";
+import { isEveryPlayerAnswerSubmitted } from '../../client/src/utils/game-utils';
 
 export const approveCurrentPrompt: ClientEventListeners['APPROVE_CURRENT_PROMPT'] = (gameId) => {
   GameManager.for(gameId).update(g => {
     g.round.ongoing.status = RoundStatus.ANSWER_SUBMISSIONS
+    g.round.ongoing.playerAnswers = Object.keys(g.players).reduce(
+      (acc, curr) => ({
+        ...acc,
+        [curr]: { isTyping: false, isLocked: false, text: '' }
+      }),
+      {} as Record<string, PlayerAnswer>
+    )
   })
 }
 
@@ -47,10 +55,27 @@ export const kickPlayer: ClientEventListeners["KICK_PLAYER"] = (
 };
 
 export const lockAnswer: ClientEventListeners['LOCK_ANSWER'] = (gameId, playerId) => {
-  GameManager.for(gameId).setPlayerAnswer(playerId, (prevAnswer) => ({
+  const gameManager = GameManager.for(gameId)
+  
+  gameManager.setPlayerAnswer(playerId, (prevAnswer) => ({
     ...prevAnswer,
     isLocked: true,
+    isTyping: false
   }))
+
+  gameManager.update(g => {
+    if (isEveryPlayerAnswerSubmitted(g.round.ongoing.playerAnswers)) {
+      g.round.ongoing.status = RoundStatus.ANSWER_MODERATION
+
+      for (const id in g.players) {
+        g.round.ongoing.playerAnswers[id] = {
+          // okay to assert - we've just checked
+          ...g.round.ongoing.playerAnswers[id] as LockedPlayerAnswer,
+          mark: null
+        };
+      }
+    }
+  })
 }
 
 export const pausePlayerTyping: ClientEventListeners['PAUSE_PLAYER_TYPING'] = (gameId, playerId) => {
