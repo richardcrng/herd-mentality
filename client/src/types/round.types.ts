@@ -1,5 +1,7 @@
+import { ProtoQAId } from "./protoqa.types";
+
 export interface RoundPrompt {
-  id: string;
+  id: ProtoQAId;
   text: string;
 }
 

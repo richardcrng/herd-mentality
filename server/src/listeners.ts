@@ -5,6 +5,7 @@ import {
 } from "../../client/src/types/event.types";
 import {
   createHostGame,
+  drawNewPrompt,
   getGame,
   joinGame,
   kickPlayer,
@@ -14,6 +15,7 @@ import {
 export const addListeners = (socket: ServerSocket): void => {
   const listeners: ClientEventListeners = {
     CREATE_HOST_GAME: createHostGame,
+    DRAW_NEW_PROMPT: drawNewPrompt,
     GET_GAME: getGame,
     JOIN_GAME: joinGame,
     KICK_PLAYER: kickPlayer,

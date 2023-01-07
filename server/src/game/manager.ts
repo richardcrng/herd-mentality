@@ -7,9 +7,10 @@ import {
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
 import { Player } from "../../../client/src/types/player.types";
-import { RoundStatus } from "../../../client/src/types/round.types";
+import { RoundPrompt, RoundStatus } from "../../../client/src/types/round.types";
 import { QUESTIONS_ARR } from "../../../client/src/data/questions";
 import { getAllQuestions } from "../questions/manager";
+import { FamilyFeudProtoQA } from "../../../client/src/types/protoqa.types";
 
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
@@ -93,6 +94,10 @@ export class GameManager {
     });
   }
 
+  public completedRoundIds(): RoundPrompt['id'][] {
+    return this.snapshot()?.round.completed.map((r) => r.prompt.id) ?? [];
+  }
+
   public async createGameWithHost(host: Player): Promise<void> {
     // okay - it should exist
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -121,6 +126,25 @@ export class GameManager {
     this._set(newGame);
 
     this.io.emit("HOST_GAME_CREATED", newGame, host.id);
+  }
+
+  public async drawNewPrompt(currentPromptId: RoundPrompt['id']): Promise<void> {
+    const questions = await getAllQuestions();
+    const unfitQuestionIds = [
+      ...this.completedRoundIds(),
+      currentPromptId
+    ]
+
+    let nextRoundQuestion: FamilyFeudProtoQA | undefined
+
+    while (!nextRoundQuestion) {
+      const possibleNextQuestion = sample(questions);
+      if (possibleNextQuestion && !unfitQuestionIds.includes(possibleNextQuestion.metadata.id)) {
+        nextRoundQuestion = possibleNextQuestion
+      }
+    }
+
+    this.replaceCurrentQuestion(nextRoundQuestion)
   }
 
   public getHostPlayer(): Player | undefined {
@@ -189,6 +213,19 @@ export class GameManager {
       delete g.players[playerId];
     });
     this.io.emit("PLAYER_KICKED", this.gameId, playerId);
+  }
+
+  public replaceCurrentQuestion(newQuestion: FamilyFeudProtoQA): void {
+    this._mutate(g => {
+      g.round.ongoing = {
+        status: RoundStatus.QUESTION_APPROVAL,
+        prompt: {
+          id: newQuestion.metadata.id,
+          text: newQuestion.question.normalized
+        },
+        playerAnswers: {}
+      }
+    })
   }
 
   public set(game: GameStateCore): void {

@@ -7,6 +7,10 @@ export const createHostGame: ClientEventListeners["CREATE_HOST_GAME"] = (
   GameManager.for(hostPlayer.gameId).createGameWithHost(hostPlayer);
 };
 
+export const drawNewPrompt: ClientEventListeners['DRAW_NEW_PROMPT'] = (gameId, currentPromptId) => {
+  GameManager.for(gameId).drawNewPrompt(currentPromptId)
+}
+
 export const getGame: ClientEventListeners["GET_GAME"] = (gameId) => {
   const gameManager = GameManager.for(gameId);
   if (gameManager.isRetrievable()) {

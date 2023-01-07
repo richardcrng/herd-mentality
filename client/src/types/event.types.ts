@@ -2,6 +2,7 @@ import { Socket as TClientSocket } from "socket.io-client";
 import { Socket as TServerSocket, Server as TServer } from "socket.io";
 import { GameStateCore } from "./game.types";
 import { Player } from "./player.types";
+import { RoundPrompt } from "./round.types";
 
 export type ClientSocket = TClientSocket<
   ServerEventListeners,
@@ -20,6 +21,7 @@ export type ServerIO = TServer<ClientEventListeners, ServerEventListeners>;
  */
 export type ClientEventListeners = {
   CREATE_HOST_GAME: (player: Player) => void;
+  DRAW_NEW_PROMPT: (gameId: string, currentPromptId: RoundPrompt['id']) => void;
   GET_GAME: (gameId: string) => void;
   JOIN_GAME: (gameId: string, player: Omit<Player, "gameId">) => void;
   KICK_PLAYER: (gameId: string, playerId: string) => void;
