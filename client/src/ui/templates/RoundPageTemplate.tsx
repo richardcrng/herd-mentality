@@ -5,7 +5,7 @@ import PlayerAnswerBubbles, { PlayerAnswerBubblesProps } from "../molecules/Play
 
 interface Props {
   round: OngoingRound;
-  message: string;
+  message: string | JSX.Element;
   action?: JSX.Element;
   players: Record<string, Player>;
   renderBubbleContent?: PlayerAnswerBubblesProps['renderBubbleContent']
@@ -46,7 +46,7 @@ const QuestionText = styled.h1.attrs({
   grid-area: question-text;
 `
 
-const Message = styled.p`
+const Message = styled.div`
   grid-area: message;
 `
 
