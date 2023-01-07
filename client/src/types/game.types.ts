@@ -24,6 +24,7 @@ export type Game = GameStateDerived;
 export enum GameStatus {
   LOBBY = "LOBBY",
   ONGOING = "ONGOING",
+  COMPLETE = "COMPLETE"
 }
 
 export interface GameSettings {}
