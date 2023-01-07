@@ -52,5 +52,5 @@ const Container = styled.div`
 `
 
 const Endmark = styled.span.attrs({
-  className: 'flex flex-col justify-center'
+  className: 'flex'
 })``

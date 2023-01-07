@@ -6,6 +6,7 @@ import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import { AnswerMark } from "../../types/round.types";
 import RoundPageTemplate from "./RoundPageTemplate";
+import styled from 'styled-components';
 
 interface Props extends GameOngoingHandlers {
   game: GameStateDerived;
@@ -30,36 +31,52 @@ export default function RoundAnswerModerationTemplate({ game, player, onModerate
         switch (playerAnswer.mark) {
           case AnswerMark.HERD:
             return (
-              <button className="btn btn-outline" onClick={createMarkHandler(playerAnswer.playerId, AnswerMark.PINK_COW)}>
-                <WinnerIcon size={32} />
-              </button>
+              <ButtonContainer>
+                <button
+                  className="btn-sm btn btn-outline btn-success"
+                  onClick={createMarkHandler(
+                    playerAnswer.playerId,
+                    AnswerMark.PINK_COW
+                  )}
+                >
+                  <WinnerIcon size={32} />
+                </button>
+              </ButtonContainer>
             );
 
           case AnswerMark.PINK_COW:
             return (
-              <button className="btn btn-[pink] btn-outline">
-                <CowIcon
-                  size={32}
-                  onClick={createMarkHandler(
-                    playerAnswer.playerId,
-                    null
-                  )}
-                />
-              </button>
+              <ButtonContainer>
+                <button className="btn-sm btn btn-outline btn-secondary">
+                  <CowIcon
+                    size={32}
+                    onClick={createMarkHandler(playerAnswer.playerId, null)}
+                  />
+                </button>
+              </ButtonContainer>
             );
 
           case undefined:
           case null:
             return (
-              <button
-                className="btn btn-outline"
-                onClick={createMarkHandler(playerAnswer.playerId, AnswerMark.HERD)}
-              >
-                <NeutralIcon size={32} />
-              </button>
+              <ButtonContainer>
+                <button
+                  className="btn-sm btn btn-outline"
+                  onClick={createMarkHandler(
+                    playerAnswer.playerId,
+                    AnswerMark.HERD
+                  )}
+                >
+                  <NeutralIcon size={32} />
+                </button>
+              </ButtonContainer>
             );
         }
       }}
     />
   );
 }
+
+const ButtonContainer = styled.div.attrs({
+  className: 'flex flex-col justify-end'
+})``
