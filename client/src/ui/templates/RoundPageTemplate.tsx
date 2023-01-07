@@ -5,20 +5,22 @@ import PlayerAnswerBubbles, { PlayerAnswerBubblesProps } from "../molecules/Play
 
 interface Props {
   round: OngoingRound;
-  message: string;
+  message: string | JSX.Element;
   action?: JSX.Element;
   players: Record<string, Player>;
-  renderBubbleContent?: PlayerAnswerBubblesProps['renderBubbleContent']
+  renderBubbleContent?: PlayerAnswerBubblesProps["renderBubbleContent"];
+  renderBubbleEndmark?: PlayerAnswerBubblesProps["renderBubbleEndmark"];
+  renderBubbleFooter?: PlayerAnswerBubblesProps["renderBubbleFooter"];
 }
 
-export default function RoundPageTemplate({ message, round, action, players, renderBubbleContent }: Props): JSX.Element {
+export default function RoundPageTemplate({ message, round, action, players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }: Props): JSX.Element {
   return (
     <Container>
       <QuestionText>{round.prompt.text}</QuestionText>
       <Message>{message}</Message>
       <PlayerData>
         <PlayerAnswerBubbles
-          {...{ players, renderBubbleContent }}
+          {...{ players, renderBubbleContent, renderBubbleEndmark, renderBubbleFooter }}
           answers={round.playerAnswers}
         />
         {/* <pre>{JSON.stringify(round.playerAnswers, null, 2)}</pre> */}
@@ -46,7 +48,7 @@ const QuestionText = styled.h1.attrs({
   grid-area: question-text;
 `
 
-const Message = styled.p`
+const Message = styled.div`
   grid-area: message;
 `
 

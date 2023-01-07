@@ -1,3 +1,6 @@
+import { useState } from 'react';
+import { IoSend as SendIcon } from 'react-icons/io5'
+// import { FiSend as SendIcon } from 'react-icons/fi'
 import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
@@ -8,28 +11,49 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onPauseTyping }: Props): JSX.Element {
+export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onLockAnswer, onPauseTyping }: Props): JSX.Element {
   const message = "Type your answer at the bottom"
+  const playerAnswer = game.round.ongoing.playerAnswers[player.id]
+
+  const [typedAnswer, setTypedAnswer] = useState('')
 
   return (
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
       players={game.players}
-      renderBubbleContent={(playerAnswer) => (
-        <span>{playerAnswer.isTyping ? '...' : ''}</span>
-      )}
+      renderBubbleContent={(playerAnswer) => {
+        if (playerAnswer.isLocked) {
+          return <span>{"📩"}</span>;
+        } else if (playerAnswer.isTyping) {
+          return <span>{playerAnswer.isTyping ? "..." : ""}</span>;
+        } else {
+          return null
+        }
+      }}
       action={
-        <input
-          className="input w-full input-bordered input-info"
-          type="text"
-          onChange={(e) => {
-            onEditAnswer(e.target.value);
-            setTimeout(() => {
-              onPauseTyping();
-            }, 1000);
-          }}
-        />
+        <div className='w-full flex gap-x-2'>
+          <input
+            className="input rounded-lg grow input-bordered input-info"
+            type="text"
+            disabled={playerAnswer?.isLocked}
+            onChange={(e) => {
+              setTypedAnswer(e.target.value)
+              onEditAnswer(e.target.value);
+              setTimeout(() => {
+                onPauseTyping();
+              }, 1000);
+            }}
+            value={typedAnswer}
+          />
+          <button
+            className='btn rounded-lg'
+            onClick={onLockAnswer}
+            disabled={!typedAnswer || playerAnswer?.isLocked}
+          >
+            <SendIcon />
+          </button>
+        </div>
       }
     />
   );

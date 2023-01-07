@@ -14,7 +14,6 @@ export enum RoundStatus {
 
 export enum AnswerMark {
   HERD = "herd",
-  NULL = "null",
   PINK_COW = "pink-cow",
 }
 
@@ -25,15 +24,22 @@ interface RoundBase {
 }
 
 export interface PlayerAnswer {
+  playerId: string;
   text: string;
   isTyping: boolean;
   isLocked: boolean;
+  mark?: AnswerMark | null;
 }
 
-export interface MarkedPlayerAnswer extends PlayerAnswer {
+export interface LockedPlayerAnswer extends PlayerAnswer {
   isTyping: false;
   isLocked: true;
-  mark: AnswerMark;
+}
+
+export interface MarkedPlayerAnswer extends LockedPlayerAnswer {
+  isTyping: false;
+  isLocked: true;
+  mark: AnswerMark | null;
 }
 
 export type OngoingRound = RoundInQuestionApproval | RoundInSubmitting | RoundInModeration

@@ -7,7 +7,7 @@ import {
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
 import { Player } from "../../../client/src/types/player.types";
-import { RoundPrompt, RoundStatus } from "../../../client/src/types/round.types";
+import { OngoingRound, PlayerAnswer, RoundPrompt, RoundStatus } from "../../../client/src/types/round.types";
 import { getAllQuestions } from "../questions/manager";
 import { FamilyFeudProtoQA } from "../../../client/src/types/protoqa.types";
 
@@ -91,6 +91,10 @@ export class GameManager {
         gameId: this.gameId,
       };
     });
+  }
+
+  public currentRound(): OngoingRound {
+    return this.snapshotOrFail().round.ongoing;
   }
 
   public completedRoundIds(): RoundPrompt["id"][] {
@@ -196,16 +200,6 @@ export class GameManager {
     }
   }
 
-  public pausePlayerTyping(playerId: string): void {
-    this._mutate(g => {
-      g.round.ongoing.playerAnswers[playerId] = {
-        isLocked: false,
-        isTyping: false,
-        text: g.round.ongoing.playerAnswers[playerId]?.text ?? ''
-      };
-    })
-  }
-
   public playerIds(): string[] {
     return Object.keys(this.players());
   }
@@ -243,6 +237,26 @@ export class GameManager {
     this._set(game);
   }
 
+  public setPlayerAnswer(
+    playerId: string,
+    setAnswer: PlayerAnswer | ((prevAnswer: PlayerAnswer) => PlayerAnswer)
+  ): void {
+    this._mutate((g) => {
+      if (typeof setAnswer === "function") {
+        g.round.ongoing.playerAnswers[playerId] = setAnswer(
+          g.round.ongoing.playerAnswers[playerId] ?? {
+            playerId,
+            text: "",
+            isLocked: false,
+            isTyping: false,
+          }
+        );
+      } else {
+        g.round.ongoing.playerAnswers[playerId] = setAnswer;
+      }
+    });
+  }
+
   public setWithPointer(
     cb: (gamePointer: GameStateCore) => GameStateCore
   ): void {
@@ -258,21 +272,18 @@ export class GameManager {
     }
   }
 
+  public snapshotOrFail(): GameStateCore {
+    const operation = this._withPointer((pointer) => cloneDeep(pointer));
+    if (operation.status === "success") {
+      return operation.result;
+    }
+
+    throw new Error(`No snapshot exists for game ${this.gameId}`)
+  }
+
   public start(): void {
     this._mutate((g) => {
       g.status = GameStatus.ONGOING;
-    });
-  }
-
-  public typeNewAnswerForPlayer(playerId: string, newAnswer: string): void {
-    this._mutate((g) => {
-      if (g.round.ongoing.playerAnswers) {
-        g.round.ongoing.playerAnswers[playerId] = {
-          isLocked: false,
-          isTyping: true,
-          text: newAnswer,
-        };
-      }
     });
   }
 

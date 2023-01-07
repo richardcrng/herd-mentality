@@ -2,7 +2,7 @@ import { Socket as TClientSocket } from "socket.io-client";
 import { Socket as TServerSocket, Server as TServer } from "socket.io";
 import { GameStateCore } from "./game.types";
 import { Player } from "./player.types";
-import { RoundPrompt } from "./round.types";
+import { AnswerMark, RoundPrompt } from "./round.types";
 
 export type ClientSocket = TClientSocket<
   ServerEventListeners,
@@ -27,6 +27,8 @@ export type ClientEventListeners = {
   GET_GAME: (gameId: string) => void;
   JOIN_GAME: (gameId: string, player: Omit<Player, "gameId">) => void;
   KICK_PLAYER: (gameId: string, playerId: string) => void;
+  LOCK_ANSWER: (gameId: string, playerId: string) => void;
+  MODERATE_ANSWER_MARK: (gameId: string, playerId: string, mark: AnswerMark | null) => void;
   START_GAME: (gameId: string) => void;
   PAUSE_PLAYER_TYPING: (gameId: string, playerId: string) => void;
 };
