@@ -48,7 +48,7 @@ export default function PlayerAnswerBubbles({ answers, players, renderBubbleCont
 
 const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr min-content;
+  grid-template-columns: 1fr 80px;
 `
 
 const Endmark = styled.span.attrs({

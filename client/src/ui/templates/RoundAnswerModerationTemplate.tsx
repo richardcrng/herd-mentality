@@ -15,7 +15,7 @@ interface Props extends GameOngoingHandlers {
 
 export default function RoundAnswerModerationTemplate({ game, player, onModerateAnswer }: Props): JSX.Element {
 
-  const message = player.isHost ? "As host, please moderate the default marking. Tap on an answer to update its marking." : "Waiting for the host to moderate the marking..."
+  const message = player.isHost ? "As host, please moderate the default marking. Tap on an answer's mark on the right to update it." : "Waiting for the host to moderate the marking..."
 
   const createMarkHandler = (playerId: string, newMark: AnswerMark | null) => () => {
     onModerateAnswer(playerId, newMark)
@@ -31,44 +31,44 @@ export default function RoundAnswerModerationTemplate({ game, player, onModerate
         switch (playerAnswer.mark) {
           case AnswerMark.HERD:
             return (
-              <ButtonContainer>
-                <button
-                  className="btn-sm btn btn-outline btn-success"
-                  onClick={createMarkHandler(
-                    playerAnswer.playerId,
-                    AnswerMark.PINK_COW
-                  )}
-                >
+              <ButtonContainer
+                onClick={createMarkHandler(
+                  playerAnswer.playerId,
+                  AnswerMark.PINK_COW
+                )}
+              >
+                <button className="btn-sm btn btn-outline btn-success">
                   <WinnerIcon size={32} />
                 </button>
+                <MarkText className="text-success">Herd</MarkText>
               </ButtonContainer>
             );
 
           case AnswerMark.PINK_COW:
             return (
-              <ButtonContainer>
+              <ButtonContainer
+                onClick={createMarkHandler(playerAnswer.playerId, null)}
+              >
                 <button className="btn-sm btn btn-outline btn-secondary">
-                  <CowIcon
-                    size={32}
-                    onClick={createMarkHandler(playerAnswer.playerId, null)}
-                  />
+                  <CowIcon size={32} />
                 </button>
+                <MarkText className="text-secondary">Pink cow</MarkText>
               </ButtonContainer>
             );
 
           case undefined:
           case null:
             return (
-              <ButtonContainer>
-                <button
-                  className="btn-sm btn btn-outline"
-                  onClick={createMarkHandler(
-                    playerAnswer.playerId,
-                    AnswerMark.HERD
-                  )}
-                >
+              <ButtonContainer
+                onClick={createMarkHandler(
+                  playerAnswer.playerId,
+                  AnswerMark.HERD
+                )}
+              >
+                <button className="btn-sm btn btn-outline">
                   <NeutralIcon size={32} />
                 </button>
+                <MarkText>Neutral</MarkText>
               </ButtonContainer>
             );
         }
@@ -80,3 +80,8 @@ export default function RoundAnswerModerationTemplate({ game, player, onModerate
 const ButtonContainer = styled.div.attrs({
   className: 'flex flex-col justify-end'
 })``
+
+const MarkText = styled.p`
+  text-align: center;
+  font-weight: 600;
+`
