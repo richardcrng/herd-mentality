@@ -36,6 +36,9 @@ export default function GameIdRoute(): JSX.Element {
       game={deriveGameData(game.data)}
       // we checked this existed above
       player={game.data.players[player.data.id]!}
+      onApprovePrompt={() => {
+        player.socket.emit('APPROVE_CURRENT_PROMPT', gameId)
+      }}
       onDrawNewPrompt={(currentPromptId) => {
         player.socket.emit('DRAW_NEW_PROMPT', gameId, currentPromptId)
       }}

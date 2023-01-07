@@ -1,5 +1,12 @@
 import { ClientEventListeners } from "../../client/src/types/event.types";
+import { RoundStatus } from "../../client/src/types/round.types";
 import { GameManager } from "./game/manager";
+
+export const approveCurrentPrompt: ClientEventListeners['APPROVE_CURRENT_PROMPT'] = (gameId) => {
+  GameManager.for(gameId).update(g => {
+    g.round.ongoing.status = RoundStatus.ANSWER_SUBMISSIONS
+  })
+}
 
 export const createHostGame: ClientEventListeners["CREATE_HOST_GAME"] = (
   hostPlayer

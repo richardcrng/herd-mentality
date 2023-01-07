@@ -4,6 +4,7 @@ import {
   ServerSocket,
 } from "../../client/src/types/event.types";
 import {
+  approveCurrentPrompt,
   createHostGame,
   drawNewPrompt,
   getGame,
@@ -14,6 +15,7 @@ import {
 
 export const addListeners = (socket: ServerSocket): void => {
   const listeners: ClientEventListeners = {
+    APPROVE_CURRENT_PROMPT: approveCurrentPrompt,
     CREATE_HOST_GAME: createHostGame,
     DRAW_NEW_PROMPT: drawNewPrompt,
     GET_GAME: getGame,

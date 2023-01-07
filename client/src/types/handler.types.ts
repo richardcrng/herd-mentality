@@ -6,5 +6,6 @@ export interface LobbyHandlers {
 }
 
 export interface GameOngoingHandlers {
+  onApprovePrompt(): void;
   onDrawNewPrompt(currentPromptId: RoundPrompt['id']): void;
 }

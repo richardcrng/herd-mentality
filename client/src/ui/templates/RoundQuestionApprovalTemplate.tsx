@@ -8,7 +8,7 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundQuestionApprovalTemplate({ game, player, onDrawNewPrompt }: Props): JSX.Element {
+export default function RoundQuestionApprovalTemplate({ game, player, onApprovePrompt, onDrawNewPrompt }: Props): JSX.Element {
 
   const currentPrompt = game.round.ongoing.prompt;
 
@@ -29,7 +29,12 @@ export default function RoundQuestionApprovalTemplate({ game, player, onDrawNewP
           >
             Draw new
           </button>
-          <button className='btn btn-success w-1/2'>Approve</button>
+          <button
+            className='btn btn-success w-1/2'
+            onClick={onApprovePrompt}
+          >
+            Approve
+          </button>
         </div>
       ) : undefined}
     />
