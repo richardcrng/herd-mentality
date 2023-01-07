@@ -105,8 +105,7 @@ export class GameManager {
       },
       round: {
         ongoing: {
-          // okay to start with this, no harm in it
-          status: RoundStatus.SUBMITTING,
+          status: RoundStatus.QUESTION_APPROVAL,
           prompt: {
             id: metadata.id,
             text: question.normalized,

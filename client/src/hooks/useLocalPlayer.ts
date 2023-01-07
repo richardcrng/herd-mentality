@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import { useEffect, useRef } from "react";
 import { useLocalStorage } from "react-use";
 import packageJson from '../../package.json'
@@ -6,7 +7,7 @@ import { generateUUID } from "../utils/data-utils";
 
 interface LocalPlayer {
   data: LocalPlayerData;
-  assign(newData: Partial<LocalPlayerData>): LocalPlayerData;
+  assign<P extends Partial<LocalPlayerData>>(newData: P): LocalPlayerData & P;
 }
 
 export default function useLocalPlayer(): LocalPlayer {
@@ -33,11 +34,13 @@ export default function useLocalPlayer(): LocalPlayer {
   return {
     data,
     assign: (newPartialData) => {
-      const newOverallData: LocalPlayerData = {
+      const newOverallData = {
         ...data,
         ...newPartialData,
       };
-      setValue(newOverallData);
+      if (!isEqual(data, newOverallData)) {
+        setValue(newOverallData);
+      }
       return newOverallData;
     },
   };

@@ -32,6 +32,10 @@ export default function GameIdRoute(): JSX.Element {
   }
 
   return (
-    <GameIdView game={deriveGameData(game.data)} />
+    <GameIdView
+      game={deriveGameData(game.data)}
+      // we checked this existed above
+      player={game.data.players[player.data.id]!}
+    />
   );
 }

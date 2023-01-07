@@ -9,7 +9,7 @@ interface SocketPlayerData extends LocalPlayerData {
 
 interface SocketPlayer {
   data: SocketPlayerData;
-  assign(newData: Partial<LocalPlayerData>): SocketPlayerData;
+  assign<P extends Partial<LocalPlayerData>>(newData: P): SocketPlayerData & P;
   socket: ClientSocket;
 }
 
