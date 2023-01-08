@@ -17,7 +17,7 @@ It is for **4-20 players**, and games take **about 20 minutes**.
 - [How to play *Herd Mentality*](/docs/RULES.md)
 - [How to use this fan-made implementation](/docs/APP.md)
 
-## About this repo
+## About this repo
 
 This is a multiplayer web app game, inspired by the board game of [Herd Mentality](https://bigpotato.co.uk/products/herd-mentality) as designed by [Big Potato Games](https://bigpotato.co.uk/).
 
