@@ -14,3 +14,7 @@ export interface GameOngoingHandlers {
   onPauseTyping(): void;
   onModerateAnswer(playerId: string, newMark: AnswerMark | null): void;
 }
+
+export interface GameCompleteHandlers {
+  onGameRestart(): void;
+}

@@ -233,6 +233,15 @@ export class GameManager {
     });
   }
 
+  public restart(): void {
+    this.drawNewPrompt()
+
+    this._mutate(g => {
+      g.status = GameStatus.LOBBY
+      g.round.completed = []
+    })
+  }
+
   public set(game: GameStateCore): void {
     this._set(game);
   }

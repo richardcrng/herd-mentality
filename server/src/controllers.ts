@@ -113,6 +113,10 @@ export const pausePlayerTyping: ClientEventListeners['PAUSE_PLAYER_TYPING'] = (g
   GameManager.for(gameId).setPlayerAnswer(playerId, (prevAnswer) => ({ ...prevAnswer, isTyping: false }))
 }
 
+export const restartGame: ClientEventListeners['RESTART_GAME'] = (gameId) => {
+  GameManager.for(gameId).restart()
+}
+
 export const startGame: ClientEventListeners["START_GAME"] = (gameId) => {
   GameManager.for(gameId).start();
 };

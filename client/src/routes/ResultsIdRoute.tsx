@@ -43,6 +43,9 @@ export default function ResultsIdRoute(): JSX.Element {
       game={game.data}
       // we checked this existed above
       player={game.data.players[player.data.id]!}
+      onGameRestart={() => {
+        player.socket.emit('RESTART_GAME', gameId)
+      }}
     />
   );
 }

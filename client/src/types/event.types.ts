@@ -30,8 +30,9 @@ export type ClientEventListeners = {
   KICK_PLAYER: (gameId: string, playerId: string) => void;
   LOCK_ANSWER: (gameId: string, playerId: string) => void;
   MODERATE_ANSWER_MARK: (gameId: string, playerId: string, mark: AnswerMark | null) => void;
-  START_GAME: (gameId: string) => void;
   PAUSE_PLAYER_TYPING: (gameId: string, playerId: string) => void;
+  RESTART_GAME: (gameId: string) => void;
+  START_GAME: (gameId: string) => void;
 };
 
 export type ClientEvent = keyof ClientEventListeners;

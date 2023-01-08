@@ -5,14 +5,15 @@ import { SiHappycow as CowIcon } from "react-icons/si";
 import { GameComplete } from "../types/game.types";
 import { Player } from "../types/player.types";
 import PlayerAnswerBubbles from "../ui/molecules/PlayerAnswerBubbles";
+import { GameCompleteHandlers } from "../types/handler.types";
 
-interface Props {
+interface Props extends GameCompleteHandlers {
   game: GameComplete;
   player: Player
 }
 
 export default function ResultsIdView({
-  game, player,
+  game, player, onGameRestart
 }: Props): JSX.Element {
   // will exist
   const winningPlayer = game.players[game.winnerId]!.name
@@ -60,7 +61,7 @@ export default function ResultsIdView({
         {player.isHost ? (
           <div>
             <p className='mb-4 font-semibold'>As host, you can restart the game.</p>
-            <button className='btn btn-block'>Restart game</button>
+            <button className='btn btn-block' onClick={onGameRestart}>Restart game</button>
           </div>
         ) : (
           <p className='mb-4 font-semibold'>Want to play again? Your host can restart the game.</p>
