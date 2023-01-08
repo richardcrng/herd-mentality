@@ -2,10 +2,9 @@
 
 > 🎯 **Win by having the most points** - and collect the most points by being the best at predicting the most common answers to questions. But **don't get the pink cow**, as you can't win when you have it!
 
-Big Potato Games has produced a great video explainer, which you can view below:
-[![Herd Mentality explainer video]({explainer-thumbnail.jpg})]({https://youtu.be/_rxOJ7Gt3FY} "How to play Herd Mentality")
+**For a video explanation**, watch this [official rules video](https://youtu.be/_rxOJ7Gt3FY) created by Big Potato Games.
 
-For a text summary, you can read on.
+For a text summary of the rules - read on!
 
 ## Round structure and scoring
 
