@@ -56,7 +56,16 @@ export default function ResultsIdView({
         />
         {/* <pre>{JSON.stringify(round.playerAnswers, null, 2)}</pre> */}
       </PlayerData>
-      {/* {action && <Action className="w-full">{action}</Action>} */}
+      <Action>
+        {player.isHost ? (
+          <div>
+            <p className='mb-4 font-semibold'>As host, you can restart the game.</p>
+            <button className='btn btn-block'>Restart game</button>
+          </div>
+        ) : (
+          <p className='mb-4 font-semibold'>Want to play again? Your host can restart the game.</p>
+        )}
+      </Action>
     </Container>
   );
 }
