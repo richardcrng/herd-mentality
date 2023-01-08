@@ -12,6 +12,7 @@
     "experimentalDecorators": true,
     "sourceMap": true,
     "downlevelIteration": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "resolveJsonModule": true
   }
 }
