@@ -1,5 +1,5 @@
 import { mapValues } from "lodash";
-import { Game, GameStateCore, GameStateDerived } from "../types/game.types";
+import { Game, GameStateCore } from "../types/game.types";
 import { ScoredPlayer } from "../types/player.types";
 import { AnswerMark, LockedPlayerAnswer, PlayerAnswer } from '../types/round.types';
 
@@ -22,19 +22,23 @@ export const calculatePlayerScores = (
   );
 };
 
-export const deriveGameData = (game: GameStateCore): GameStateDerived => {
+export const deriveGameData = (game: GameStateCore): Game => {
   const scores = calculatePlayerScores(game.round.completed);
   const pinkCowPlayerId = findCurrentPinkCowPlayerId(game.round.completed);
+  const winnerId = findWinnerId(scores, pinkCowPlayerId);
+  const scoredPlayers = mapValues(game.players, (p) => ({
+      ...p,
+      score: scores[p.id] ?? 0,
+    }))
+  
+  // TODO improve rigour, e.g. add assertIsGame
 
   return {
     ...game,
     pinkCowPlayerId,
-    winnerId: findWinnerId(scores, pinkCowPlayerId),
-    players: mapValues(game.players, (p) => ({
-      ...p,
-      score: scores[p.id] ?? 0,
-    })),
-  };
+    winnerId,
+    players: scoredPlayers,
+  } as Game;
 }
 
 export const findCurrentPinkCowPlayerId = (

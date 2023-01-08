@@ -9,7 +9,6 @@ import { GameStatus } from "../types/game.types";
 import { PATHS } from "./paths";
 import { useEffect } from 'react';
 import LoadingGameIdView from "../views/LoadingGameIdView";
-import { deriveGameData } from "../utils/game-utils";
 
 function LobbyIdRoute(): JSX.Element {
   const { id: gameId } = useParams<{ id: string }>();
@@ -46,6 +45,11 @@ function LobbyIdRoute(): JSX.Element {
     return <Redirect to={PATHS.gameForId(game.data.id)} />;
   }
 
+  if (game.data.status === GameStatus.COMPLETE) {
+    // game is not in lobby
+    return <Redirect to={PATHS.resultsForId(game.data.id)} />;
+  }
+
   if (!game.data.players[player.data.id]) {
     const gameId = game.data.id;
 
@@ -64,7 +68,7 @@ function LobbyIdRoute(): JSX.Element {
 
   return (
     <LobbyIdView
-      game={deriveGameData(game.data)}
+      game={game.data}
       player={game.data.players[player.data.id]!}
       players={Object.values(game.data.players)}
       onGameStart={() => {
