@@ -1,4 +1,4 @@
-import { GameStateDerived } from "../types/game.types";
+import { GameOngoing } from "../types/game.types";
 import { GameOngoingHandlers } from "../types/handler.types";
 import { Player } from "../types/player.types";
 import { RoundStatus } from "../types/round.types";
@@ -7,7 +7,7 @@ import RoundAnswerSubmissionTemplate from "../ui/templates/RoundAnswerSubmission
 import RoundQuestionApprovalTemplate from "../ui/templates/RoundQuestionApprovalTemplate";
 
 interface Props extends GameOngoingHandlers {
-  game: GameStateDerived;
+  game: GameOngoing;
   player: Player;
 }
 
@@ -22,10 +22,4 @@ export default function GameIdView({ game, player, ...handlers }: Props): JSX.El
     case RoundStatus.ANSWER_MODERATION:
       return <RoundAnswerModerationTemplate {...{ game, player, ...handlers }} />
   }
-
-  // return (
-  //   <>
-  //     <h1 className='uppercase text-3xl'>{game.round.ongoing.prompt.text}</h1>
-  //   </>
-  // );
 }

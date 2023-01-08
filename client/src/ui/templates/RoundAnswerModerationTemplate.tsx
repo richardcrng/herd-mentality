@@ -1,7 +1,7 @@
 import { MdSentimentNeutral as NeutralIcon } from 'react-icons/md'
 import { GiPodiumWinner as WinnerIcon } from "react-icons/gi";
 import { SiHappycow as CowIcon } from "react-icons/si";
-import { GameStateDerived } from "../../types/game.types"
+import { GameOngoing } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import { AnswerMark } from "../../types/round.types";
@@ -9,7 +9,7 @@ import RoundPageTemplate from "./RoundPageTemplate";
 import styled from 'styled-components';
 
 interface Props extends GameOngoingHandlers {
-  game: GameStateDerived;
+  game: GameOngoing;
   player: Player;
 }
 

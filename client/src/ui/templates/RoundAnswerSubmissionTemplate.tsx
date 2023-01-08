@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { IoSend as SendIcon } from 'react-icons/io5'
+import { GameOngoing } from '../../types/game.types';
 // import { FiSend as SendIcon } from 'react-icons/fi'
-import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import RoundPageTemplate from "./RoundPageTemplate";
 
 interface Props extends GameOngoingHandlers {
-  game: GameStateDerived;
+  game: GameOngoing;
   player: Player;
 }
 
