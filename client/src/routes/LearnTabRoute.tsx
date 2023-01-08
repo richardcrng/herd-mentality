@@ -1,9 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import LearnTabView, { LearnTab } from '../views/LearnTabView';
+import { useHistory } from 'react-router';
+import { PATHS } from './paths';
 
 export default function LearnTabRoute(): JSX.Element {
   const { tab } = useParams<{ tab: LearnTab }>();
+
+  const history = useHistory();
 
   const { isLoading, data } = useQuery({
     queryKey: 'learn-docs',
@@ -39,6 +43,7 @@ export default function LearnTabRoute(): JSX.Element {
         [LearnTab.RULES]: data.rules!,
         [LearnTab.APP]: data.app!,
       }}
+      onTabChange={(t) => history.push(PATHS.learnForTab(t))}
       tab={tab}
     />
   );

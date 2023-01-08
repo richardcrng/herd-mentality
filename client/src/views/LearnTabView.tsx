@@ -1,4 +1,6 @@
 import ReactMarkdown from 'react-markdown'
+import styled from 'styled-components'
+import classNames from 'classnames';
 
 export enum LearnTab {
   WELCOME = "welcome",
@@ -8,15 +10,47 @@ export enum LearnTab {
 
 interface Props {
   markdownDict: Record<LearnTab, string>;
+  onTabChange(newTab: LearnTab): void;
   tab: LearnTab;
 }
 
-export default function LearnTabView({ markdownDict, tab }: Props): JSX.Element {
-return (
-  <>
-    <div className='h-full overflow-y-scroll prose'>
-      <ReactMarkdown>{markdownDict[tab]}</ReactMarkdown>
-    </div>
-  </>
-);
+export default function LearnTabView({ markdownDict, onTabChange, tab }: Props): JSX.Element {
+  return (
+    <Container>
+      <Tabs>
+        {Object.values(LearnTab).map(t => (
+          <span
+            key={t}
+            className={classNames("tab tab-lifted", t === tab && 'tab-active')}
+            onClick={() => onTabChange(t)}
+          >
+            {t}
+          </span>
+        ))}
+      </Tabs>
+      <Markdown>{markdownDict[tab]}</Markdown>
+    </Container>
+  );
 }
+
+const Container = styled.div.attrs({
+  className: 'h-full grid'
+})`
+  grid-template-areas:
+    "tabs"
+    "markdown";
+
+  grid-template-rows: min-content 1fr;
+`
+
+const Tabs = styled.div.attrs({
+  className: 'tabs'
+})`
+  grid-area: tabs;
+`
+
+const Markdown = styled(ReactMarkdown).attrs({
+  className: 'overflow-y-scroll prose'
+})`
+  grid-area: markdown;
+`
