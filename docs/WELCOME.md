@@ -9,3 +9,5 @@ This app is a fan-made digital implementation of the original physical board gam
 You should [buy the original](https://bigpotato.co.uk/products/herd-mentality), which is a superior experience, and supports the development of games like this.
 
 However, if you are somewhere without access to your physical set, this fan-made digital implementation can give you a similar experience.
+
+*Instead of using the original Herd Mentality question set, this uses an open-source Family Feud question database, called [ProtoQA](https://github.com/iesl/protoqa-data).*
