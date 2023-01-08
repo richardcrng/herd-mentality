@@ -1,26 +1,33 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import useMobileVH from "./hooks/useMobileVH";
 import HostNewRoute from "./routes/HostNewRoute";
 import IndexRoute from "./routes/IndexRoute";
 import LobbyIdRoute from "./routes/LobbyIdRoute";
-import { PATHS } from "./routes/paths";
+import { LearnTab, PATHS } from "./routes/paths";
 import GameIdRoute from "./routes/GameIdRoute";
 import ResultsIdRoute from "./routes/ResultsIdRoute";
+import LearnTabRoute from "./routes/LearnTabRoute";
 
 function App(): JSX.Element {
   useMobileVH();
 
   return (
     <Router>
-      {/* <ToastContainer autoClose={3000} draggablePercent={30} /> */}
       <AppBackground>
         <AppContainer>
           <Switch>
+            {/* Main game routes */}
             <Route exact path={PATHS.hostNew} component={HostNewRoute} />
             <Route exact path={PATHS.lobbyId} component={LobbyIdRoute} />
             <Route exact path={PATHS.gameId} component={GameIdRoute} />
             <Route exact path={PATHS.resultsId} component={ResultsIdRoute} />
+
+            {/* Learning routes */}
+            <Route exact path={'/learn'} component={() => <Redirect to={PATHS.learnForTab(LearnTab.WELCOME)} />} />
+            <Route exact path={PATHS.learnTab} component={LearnTabRoute} />
+
+            {/* Index */}
             <Route path={PATHS.index} component={IndexRoute} />
           </Switch>
         </AppContainer>
