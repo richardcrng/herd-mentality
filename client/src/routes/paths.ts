@@ -1,3 +1,5 @@
+import { LearnTab } from "../views/LearnTabView";
+
 export const PATHS = {
   hostNew: "/host/new" as const,
   index: "/" as const,
@@ -11,8 +13,3 @@ export const PATHS = {
   resultsForId: (gameId: string) => `/results/${gameId}` as const,
 };
 
-export enum LearnTab {
-  WELCOME = 'welcome',
-  RULES = 'rules',
-  APP = 'app'
-}

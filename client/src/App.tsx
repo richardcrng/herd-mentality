@@ -4,10 +4,11 @@ import useMobileVH from "./hooks/useMobileVH";
 import HostNewRoute from "./routes/HostNewRoute";
 import IndexRoute from "./routes/IndexRoute";
 import LobbyIdRoute from "./routes/LobbyIdRoute";
-import { LearnTab, PATHS } from "./routes/paths";
+import { PATHS } from "./routes/paths";
 import GameIdRoute from "./routes/GameIdRoute";
 import ResultsIdRoute from "./routes/ResultsIdRoute";
 import LearnTabRoute from "./routes/LearnTabRoute";
+import { LearnTab } from "./views/LearnTabView";
 
 function App(): JSX.Element {
   useMobileVH();
