@@ -1,7 +1,7 @@
 // import fs from "fs/promises";
 // import path from "path";
 // import { jsonl } from "js-jsonl";
-import questionsData from './data.json'
+import questionsData from "./data.json";
 import {
   FamilyFeudProtoQA,
   ProtoQAId,
@@ -10,8 +10,7 @@ import {
 // const dataPath = path.join(__dirname, "train.jsonl");
 
 const QUESTIONS_DB = questionsData as Record<ProtoQAId, FamilyFeudProtoQA>;
-const QUESTIONS_ARR = Object.values(QUESTIONS_DB)
-
+const QUESTIONS_ARR = Object.values(QUESTIONS_DB);
 
 export async function getAllQuestions(): Promise<FamilyFeudProtoQA[]> {
   return QUESTIONS_ARR;
