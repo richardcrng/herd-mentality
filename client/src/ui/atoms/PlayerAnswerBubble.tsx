@@ -1,3 +1,4 @@
+import Avatar from "boring-avatars";
 import classNames from "classnames";
 import { PropsWithChildren } from "react";
 import { ScoredPlayer } from "../../types/player.types";
@@ -33,7 +34,7 @@ export default function PlayerAnswerBubble({
             isPinkCow && "border-secondary border-4"
           )}
         >
-          <img alt="placeholder" src="https://placeimg.com/192/192/people" />
+          <Avatar name={player.name} variant="beam" />
         </div>
       </div>
       <div
