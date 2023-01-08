@@ -1,19 +1,20 @@
-import fs from "fs/promises";
-import path from "path";
-import { jsonl } from "js-jsonl";
+// import fs from "fs/promises";
+// import path from "path";
+// import { jsonl } from "js-jsonl";
+import questionsData from './data.json'
 import {
   FamilyFeudProtoQA,
   ProtoQAId,
 } from "../../../client/src/types/protoqa.types";
 
-const dataPath = path.join(__dirname, "train.jsonl");
+// const dataPath = path.join(__dirname, "train.jsonl");
 
-const QUESTIONS_DB: Record<ProtoQAId, FamilyFeudProtoQA> = {};
+const QUESTIONS_DB = questionsData as Record<ProtoQAId, FamilyFeudProtoQA>;
+const QUESTIONS_ARR = Object.values(QUESTIONS_DB)
 
-let parsedQuestionData: FamilyFeudProtoQA[] | undefined;
 
 export async function getAllQuestions(): Promise<FamilyFeudProtoQA[]> {
-  return parsedQuestionData ?? (await parseQuestionData());
+  return QUESTIONS_ARR;
 }
 
 export async function getQuestionById(
@@ -45,10 +46,10 @@ export async function getQuestionDatabase(): Promise<typeof QUESTIONS_DB> {
 }
 
 export async function parseQuestionData(): Promise<FamilyFeudProtoQA[]> {
-  const rawJsonlData = await fs.readFile(dataPath, { encoding: "utf8" });
-  parsedQuestionData = jsonl.parse<FamilyFeudProtoQA>(rawJsonlData);
-  parsedQuestionData.forEach((q) => {
-    QUESTIONS_DB[q.metadata.id] = q;
-  });
-  return parsedQuestionData;
+  // const rawJsonlData = await fs.readFile(dataPath, { encoding: "utf8" });
+  // parsedQuestionData = jsonl.parse<FamilyFeudProtoQA>(rawJsonlData);
+  // parsedQuestionData.forEach((q) => {
+  //   QUESTIONS_DB[q.metadata.id] = q;
+  // });
+  return QUESTIONS_ARR;
 }
