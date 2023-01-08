@@ -20,7 +20,20 @@ export interface GameStateDerived extends GameStateCore {
   players: Record<string, ScoredPlayer>;
 }
 
-export type Game = GameStateDerived;
+export interface GameInLobby extends GameStateDerived {
+  status: GameStatus.LOBBY
+}
+
+export interface GameOngoing extends GameStateDerived {
+  status: GameStatus.ONGOING
+}
+
+export interface GameComplete extends GameStateDerived {
+  status: GameStatus.COMPLETE;
+  winnerId: string;
+}
+
+export type Game = GameInLobby | GameOngoing | GameComplete
 
 export enum GameStatus {
   LOBBY = "LOBBY",
