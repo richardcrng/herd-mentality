@@ -52,7 +52,7 @@ function LobbyIdView({
             <PlayerListItemContents>
               <p style={{ marginLeft: "10px" }}>
                 <span className="font-medium">{playerToRender.name}</span>
-                <span className='font-light'>
+                <span className="font-light">
                   {playerToRender.id === ownPlayerId && " (you)"}
                   {playerToRender.isHost && " (host)"}
                 </span>
