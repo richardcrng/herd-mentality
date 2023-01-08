@@ -27,7 +27,7 @@
     "react-storage-hooks": "^4.0.1",
     "react-use": "^17.2.1",
     "reselect": "^4.0.0",
-    "riduce": "^0.0.15",
+    "riduce": "^0.0.27",
     "seedrandom": "^3.0.5",
     "socket.io-client": "^4.0.0",
     "styled-components": "^5.3.6",
