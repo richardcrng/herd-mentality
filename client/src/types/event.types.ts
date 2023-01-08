@@ -23,13 +23,17 @@ export type ClientEventListeners = {
   APPROVE_CURRENT_PROMPT: (gameId: string) => void;
   CONFIRM_MARKS: (gameId: string) => void;
   CREATE_HOST_GAME: (player: Player) => void;
-  DRAW_NEW_PROMPT: (gameId: string, currentPromptId: RoundPrompt['id']) => void;
+  DRAW_NEW_PROMPT: (gameId: string, currentPromptId: RoundPrompt["id"]) => void;
   EDIT_ANSWER: (gameId: string, playerId: string, typedAnswer: string) => void;
   GET_GAME: (gameId: string) => void;
   JOIN_GAME: (gameId: string, player: Omit<Player, "gameId">) => void;
   KICK_PLAYER: (gameId: string, playerId: string) => void;
   LOCK_ANSWER: (gameId: string, playerId: string) => void;
-  MODERATE_ANSWER_MARK: (gameId: string, playerId: string, mark: AnswerMark | null) => void;
+  MODERATE_ANSWER_MARK: (
+    gameId: string,
+    playerId: string,
+    mark: AnswerMark | null
+  ) => void;
   PAUSE_PLAYER_TYPING: (gameId: string, playerId: string) => void;
   RESTART_GAME: (gameId: string) => void;
   START_GAME: (gameId: string) => void;

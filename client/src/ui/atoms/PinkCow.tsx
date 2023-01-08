@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 interface Props {
   className?: string;
@@ -6,12 +6,10 @@ interface Props {
 }
 
 export default function PinkCow({ className, style }: Props): JSX.Element {
-  return (
-    <PinkContainer {...{ className, style }}>🐄</PinkContainer>
-  )
+  return <PinkContainer {...{ className, style }}>🐄</PinkContainer>;
 }
 
 const PinkContainer = styled.span`
   color: transparent;
   text-shadow: 0 0 0 pink;
-`
+`;

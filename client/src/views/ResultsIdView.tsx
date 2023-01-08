@@ -9,14 +9,16 @@ import { GameCompleteHandlers } from "../types/handler.types";
 
 interface Props extends GameCompleteHandlers {
   game: GameComplete;
-  player: Player
+  player: Player;
 }
 
 export default function ResultsIdView({
-  game, player, onGameRestart
+  game,
+  player,
+  onGameRestart,
 }: Props): JSX.Element {
   // will exist
-  const winningPlayer = game.players[game.winnerId]!.name
+  const winningPlayer = game.players[game.winnerId]!.name;
 
   return (
     <Container>
@@ -60,11 +62,17 @@ export default function ResultsIdView({
       <Action>
         {player.isHost ? (
           <div>
-            <p className='mb-4 font-semibold'>As host, you can restart the game.</p>
-            <button className='btn btn-block' onClick={onGameRestart}>Restart game</button>
+            <p className="mb-4 font-semibold">
+              As host, you can restart the game.
+            </p>
+            <button className="btn btn-block" onClick={onGameRestart}>
+              Restart game
+            </button>
           </div>
         ) : (
-          <p className='mb-4 font-semibold'>Want to play again? Your host can restart the game.</p>
+          <p className="mb-4 font-semibold">
+            Want to play again? Your host can restart the game.
+          </p>
         )}
       </Action>
     </Container>
@@ -90,7 +98,7 @@ const Announcement = styled.h1.attrs({
 `;
 
 const Message = styled.div.attrs({
-  className: 'text-xl'
+  className: "text-xl",
 })`
   grid-area: message;
 `;
@@ -100,8 +108,8 @@ const PlayerData = styled.div`
 `;
 
 const IconContainer = styled.div.attrs({
-  className: 'flex flex-col justify-center justify-items-end'
-})``
+  className: "flex flex-col justify-center justify-items-end",
+})``;
 
 const Action = styled.div`
   grid-area: action;

@@ -7,15 +7,21 @@ type Props = PropsWithChildren<{
   isPinkCow?: boolean;
   footer?: JSX.Element | null;
   player: ScoredPlayer;
-}>
+}>;
 
-export default function PlayerAnswerBubble({ className, children, isPinkCow, player, footer }: Props): JSX.Element {
+export default function PlayerAnswerBubble({
+  className,
+  children,
+  isPinkCow,
+  player,
+  footer,
+}: Props): JSX.Element {
   return (
     <div className={classNames("chat chat-start", className)}>
       <div
         className={classNames(
           "col-start-1 row-start-1 w-full flex justify-center",
-          isPinkCow && 'text-secondary'
+          isPinkCow && "text-secondary"
         )}
       >
         {player.score}

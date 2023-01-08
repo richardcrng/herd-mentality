@@ -12,9 +12,7 @@ export default function ResultsIdRoute(): JSX.Element {
   const player = useSocketPlayer();
 
   if (game.loading) {
-    return (
-      <LoadingGameIdView {...{ gameId }} />
-    );
+    return <LoadingGameIdView {...{ gameId }} />;
   }
 
   if (!game.data) {
@@ -44,7 +42,7 @@ export default function ResultsIdRoute(): JSX.Element {
       // we checked this existed above
       player={game.data.players[player.data.id]!}
       onGameRestart={() => {
-        player.socket.emit('RESTART_GAME', gameId)
+        player.socket.emit("RESTART_GAME", gameId);
       }}
     />
   );

@@ -21,11 +21,11 @@ export interface GameStateDerived extends GameStateCore {
 }
 
 export interface GameInLobby extends GameStateDerived {
-  status: GameStatus.LOBBY
+  status: GameStatus.LOBBY;
 }
 
 export interface GameOngoing extends GameStateDerived {
-  status: GameStatus.ONGOING
+  status: GameStatus.ONGOING;
 }
 
 export interface GameComplete extends GameStateDerived {
@@ -33,12 +33,12 @@ export interface GameComplete extends GameStateDerived {
   winnerId: string;
 }
 
-export type Game = GameInLobby | GameOngoing | GameComplete
+export type Game = GameInLobby | GameOngoing | GameComplete;
 
 export enum GameStatus {
   LOBBY = "LOBBY",
   ONGOING = "ONGOING",
-  COMPLETE = "COMPLETE"
+  COMPLETE = "COMPLETE",
 }
 
 export interface GameSettings {}

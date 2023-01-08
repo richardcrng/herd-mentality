@@ -11,15 +11,25 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function GameIdView({ game, player, ...handlers }: Props): JSX.Element {
+export default function GameIdView({
+  game,
+  player,
+  ...handlers
+}: Props): JSX.Element {
   const currentRoundStatus = game.round.ongoing.status;
 
   switch (currentRoundStatus) {
     case RoundStatus.QUESTION_APPROVAL:
-      return <RoundQuestionApprovalTemplate {...{ game, player, ...handlers }} />;
+      return (
+        <RoundQuestionApprovalTemplate {...{ game, player, ...handlers }} />
+      );
     case RoundStatus.ANSWER_SUBMISSIONS:
-      return <RoundAnswerSubmissionTemplate {...{ game, player, ...handlers }} />;
+      return (
+        <RoundAnswerSubmissionTemplate {...{ game, player, ...handlers }} />
+      );
     case RoundStatus.ANSWER_MODERATION:
-      return <RoundAnswerModerationTemplate {...{ game, player, ...handlers }} />
+      return (
+        <RoundAnswerModerationTemplate {...{ game, player, ...handlers }} />
+      );
   }
 }

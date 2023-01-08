@@ -1,6 +1,9 @@
 import { AnswerMark } from "../types/round.types";
-import { findCurrentPinkCowPlayerId, calculatePlayerScores, findWinnerId } from "./game-utils";
-
+import {
+  findCurrentPinkCowPlayerId,
+  calculatePlayerScores,
+  findWinnerId,
+} from "./game-utils";
 
 describe("calculatePlayerScores", () => {
   it("avoids mutating original array", () => {
@@ -67,13 +70,13 @@ describe("calculatePlayerScores", () => {
       a: 3,
       b: 2,
       c: 0,
-      d: 2
+      d: 2,
     });
   });
 });
 
-describe('findCurrentPinkCowPlayerId', () => {
-  it('avoids mutating original array', () => {
+describe("findCurrentPinkCowPlayerId", () => {
+  it("avoids mutating original array", () => {
     const rounds: {
       playerAnswers: Record<string, { mark: AnswerMark }>;
     }[] = [
@@ -87,7 +90,7 @@ describe('findCurrentPinkCowPlayerId', () => {
       },
     ];
 
-    findCurrentPinkCowPlayerId(rounds)
+    findCurrentPinkCowPlayerId(rounds);
 
     expect(rounds).toMatchObject([
       {
@@ -99,7 +102,7 @@ describe('findCurrentPinkCowPlayerId', () => {
         },
       },
     ]);
-  })
+  });
 
   it("finds the only pink cow player with one completed round", () => {
     const rounds: {
@@ -117,7 +120,7 @@ describe('findCurrentPinkCowPlayerId', () => {
 
     const res = findCurrentPinkCowPlayerId(rounds);
 
-    expect(res).toBe('c');
+    expect(res).toBe("c");
   });
 
   it("finds the only pink cow player with one completed round, where second had no pink cow", () => {
@@ -173,7 +176,7 @@ describe('findCurrentPinkCowPlayerId', () => {
 
     expect(res).toBeNull();
   });
-})
+});
 
 describe("findWinner", () => {
   it("declares no winner when all scores are below 8", () => {

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { IoSend as SendIcon } from 'react-icons/io5'
-import { GameOngoing } from '../../types/game.types';
+import { useState } from "react";
+import { IoSend as SendIcon } from "react-icons/io5";
+import { GameOngoing } from "../../types/game.types";
 // import { FiSend as SendIcon } from 'react-icons/fi'
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
@@ -11,11 +11,17 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onLockAnswer, onPauseTyping }: Props): JSX.Element {
-  const message = "Type your answer at the bottom"
-  const playerAnswer = game.round.ongoing.playerAnswers[player.id]
+export default function RoundAnswerSubmissionTemplate({
+  game,
+  player,
+  onEditAnswer,
+  onLockAnswer,
+  onPauseTyping,
+}: Props): JSX.Element {
+  const message = "Type your answer at the bottom";
+  const playerAnswer = game.round.ongoing.playerAnswers[player.id];
 
-  const [typedAnswer, setTypedAnswer] = useState('')
+  const [typedAnswer, setTypedAnswer] = useState("");
 
   return (
     <RoundPageTemplate

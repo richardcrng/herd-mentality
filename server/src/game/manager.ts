@@ -7,10 +7,14 @@ import {
 } from "../../../client/src/types/game.types";
 import { PlayerManager } from "../player/manager";
 import { Player } from "../../../client/src/types/player.types";
-import { OngoingRound, PlayerAnswer, RoundPrompt, RoundStatus } from "../../../client/src/types/round.types";
+import {
+  OngoingRound,
+  PlayerAnswer,
+  RoundPrompt,
+  RoundStatus,
+} from "../../../client/src/types/round.types";
 import { getAllQuestions } from "../questions/manager";
 import { FamilyFeudProtoQA } from "../../../client/src/types/protoqa.types";
-
 
 const GAMES_DB: Record<GameStateCore["id"], GameStateCore> = {};
 
@@ -234,12 +238,12 @@ export class GameManager {
   }
 
   public restart(): void {
-    this.drawNewPrompt()
+    this.drawNewPrompt();
 
-    this._mutate(g => {
-      g.status = GameStatus.LOBBY
-      g.round.completed = []
-    })
+    this._mutate((g) => {
+      g.status = GameStatus.LOBBY;
+      g.round.completed = [];
+    });
   }
 
   public set(game: GameStateCore): void {
@@ -258,7 +262,7 @@ export class GameManager {
             text: "",
             isLocked: false,
             isTyping: false,
-            mark: null
+            mark: null,
           }
         );
       } else {
@@ -288,7 +292,7 @@ export class GameManager {
       return operation.result;
     }
 
-    throw new Error(`No snapshot exists for game ${this.gameId}`)
+    throw new Error(`No snapshot exists for game ${this.gameId}`);
   }
 
   public start(): void {

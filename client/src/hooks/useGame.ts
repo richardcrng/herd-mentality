@@ -22,10 +22,13 @@ export default function useGame(gameId: string): UseGameResult {
   const { state, dispatch, actions } = useRiducer(initialState);
 
   const setGame = (game: GameStateCore) => {
-    const derivedData = deriveGameData(game)
-  
+    const derivedData = deriveGameData(game);
+
     dispatch(
-      bundle([actions.data.create.update(derivedData), actions.loading.create.off()])
+      bundle([
+        actions.data.create.update(derivedData),
+        actions.loading.create.off(),
+      ])
     );
   };
 

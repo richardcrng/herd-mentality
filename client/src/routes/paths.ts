@@ -5,6 +5,6 @@ export const PATHS = {
   gameForId: (gameId: string) => `/play/${gameId}` as const,
   lobbyId: "/lobby/:id" as const,
   lobbyForGameId: (gameId: string) => `/lobby/${gameId}` as const,
-  resultsId: '/results/:id' as const,
-  resultsForId: (gameId: string) => `/results/${gameId}` as const
+  resultsId: "/results/:id" as const,
+  resultsForId: (gameId: string) => `/results/${gameId}` as const,
 };

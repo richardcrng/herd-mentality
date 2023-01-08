@@ -1,4 +1,4 @@
-import { GameOngoing } from "../../types/game.types"
+import { GameOngoing } from "../../types/game.types";
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import RoundPageTemplate from "./RoundPageTemplate";
@@ -8,11 +8,17 @@ interface Props extends GameOngoingHandlers {
   player: Player;
 }
 
-export default function RoundQuestionApprovalTemplate({ game, player, onApprovePrompt, onDrawNewPrompt }: Props): JSX.Element {
-
+export default function RoundQuestionApprovalTemplate({
+  game,
+  player,
+  onApprovePrompt,
+  onDrawNewPrompt,
+}: Props): JSX.Element {
   const currentPrompt = game.round.ongoing.prompt;
 
-  const message = player.isHost ? "As host, you can approve this question or draw another" : "Waiting for the host to approve this question or draw another"
+  const message = player.isHost
+    ? "As host, you can approve this question or draw another"
+    : "Waiting for the host to approve this question or draw another";
 
   return (
     <RoundPageTemplate
@@ -20,24 +26,21 @@ export default function RoundQuestionApprovalTemplate({ game, player, onApproveP
       message={message}
       pinkCowPlayerId={game.pinkCowPlayerId}
       players={game.players}
-      action={player.isHost ? (
-        <div
-          className='w-full btn-group btn-group-horizontal'
-        >
-          <button
-            className='btn btn-error w-1/2'
-            onClick={() => onDrawNewPrompt(currentPrompt.id)}
-          >
-            Draw new
-          </button>
-          <button
-            className='btn btn-success w-1/2'
-            onClick={onApprovePrompt}
-          >
-            Approve
-          </button>
-        </div>
-      ) : undefined}
+      action={
+        player.isHost ? (
+          <div className="w-full btn-group btn-group-horizontal">
+            <button
+              className="btn btn-error w-1/2"
+              onClick={() => onDrawNewPrompt(currentPrompt.id)}
+            >
+              Draw new
+            </button>
+            <button className="btn btn-success w-1/2" onClick={onApprovePrompt}>
+              Approve
+            </button>
+          </div>
+        ) : undefined
+      }
     />
-  )
+  );
 }

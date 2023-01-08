@@ -1,25 +1,28 @@
 import { mapValues } from "lodash";
 import { Game, GameStateCore } from "../types/game.types";
 import { ScoredPlayer } from "../types/player.types";
-import { AnswerMark, LockedPlayerAnswer, PlayerAnswer } from '../types/round.types';
+import {
+  AnswerMark,
+  LockedPlayerAnswer,
+  PlayerAnswer,
+} from "../types/round.types";
 
 export const calculatePlayerScores = (
-  completedRounds: { playerAnswers: Record<string, { mark: AnswerMark | null }> }[]
+  completedRounds: {
+    playerAnswers: Record<string, { mark: AnswerMark | null }>;
+  }[]
 ): Record<string, number> => {
-  return completedRounds.reduce(
-    (acc, round) => {
-      for (const playerId in round.playerAnswers) {
-        if (round.playerAnswers[playerId]?.mark === AnswerMark.HERD) {
-          acc[playerId] = (acc[playerId] ?? 0) + 1
-        } else {
-          acc[playerId] ??= 0
-        }
+  return completedRounds.reduce((acc, round) => {
+    for (const playerId in round.playerAnswers) {
+      if (round.playerAnswers[playerId]?.mark === AnswerMark.HERD) {
+        acc[playerId] = (acc[playerId] ?? 0) + 1;
+      } else {
+        acc[playerId] ??= 0;
       }
+    }
 
-      return acc
-    },
-    {} as Record<string, number>
-  );
+    return acc;
+  }, {} as Record<string, number>);
 };
 
 export const deriveGameData = (game: GameStateCore): Game => {
@@ -27,10 +30,10 @@ export const deriveGameData = (game: GameStateCore): Game => {
   const pinkCowPlayerId = findCurrentPinkCowPlayerId(game.round.completed);
   const winnerId = findWinnerId(scores, pinkCowPlayerId);
   const scoredPlayers = mapValues(game.players, (p) => ({
-      ...p,
-      score: scores[p.id] ?? 0,
-    }))
-  
+    ...p,
+    score: scores[p.id] ?? 0,
+  }));
+
   // TODO improve rigour, e.g. add assertIsGame
 
   return {
@@ -39,10 +42,12 @@ export const deriveGameData = (game: GameStateCore): Game => {
     winnerId,
     players: scoredPlayers,
   } as Game;
-}
+};
 
 export const findCurrentPinkCowPlayerId = (
-  completedRounds: { playerAnswers: Record<string, { mark: AnswerMark | null }> }[]
+  completedRounds: {
+    playerAnswers: Record<string, { mark: AnswerMark | null }>;
+  }[]
 ): string | null => {
   const roundsInReverseOrder = [...completedRounds].reverse();
   for (const round of roundsInReverseOrder) {
@@ -70,10 +75,7 @@ export const findWinnerId = (
     }
   });
 
-  if (
-    playerEntries[0] &&
-    playerEntries[0][1] !== playerEntries[1]?.[1]
-  ) {
+  if (playerEntries[0] && playerEntries[0][1] !== playerEntries[1]?.[1]) {
     const winningPlayer = playerEntries[0];
     return winningPlayer[1] >= 8 ? winningPlayer[0] : null;
   }
@@ -83,19 +85,23 @@ export const findWinnerId = (
 
 export const getGameHost = (game: Game): ScoredPlayer & { isHost: true } => {
   const players = Object.values(game.players);
-  const host = players.find((p): p is ScoredPlayer & { isHost: true } => !!p.isHost);
+  const host = players.find(
+    (p): p is ScoredPlayer & { isHost: true } => !!p.isHost
+  );
   if (!host) {
-    throw new Error("Game does not appear to have a host")
+    throw new Error("Game does not appear to have a host");
   }
-  return host
-}
+  return host;
+};
 
-export const isEveryPlayerAnswerSubmitted = (playerAnswers: Record<string, PlayerAnswer>): playerAnswers is Record<string, LockedPlayerAnswer> => {
+export const isEveryPlayerAnswerSubmitted = (
+  playerAnswers: Record<string, PlayerAnswer>
+): playerAnswers is Record<string, LockedPlayerAnswer> => {
   for (const answer of Object.values(playerAnswers)) {
     if (!answer.isLocked) {
-      return false
+      return false;
     }
   }
 
-  return true
-}
+  return true;
+};

@@ -12,9 +12,7 @@ export default function GameIdRoute(): JSX.Element {
   const player = useSocketPlayer();
 
   if (game.loading) {
-    return (
-      <LoadingGameIdView {...{ gameId }} />
-    );
+    return <LoadingGameIdView {...{ gameId }} />;
   }
 
   if (!game.data) {
@@ -44,25 +42,25 @@ export default function GameIdRoute(): JSX.Element {
       // we checked this existed above
       player={game.data.players[player.data.id]!}
       onApprovePrompt={() => {
-        player.socket.emit('APPROVE_CURRENT_PROMPT', gameId)
+        player.socket.emit("APPROVE_CURRENT_PROMPT", gameId);
       }}
       onConfirmMarks={() => {
-        player.socket.emit('CONFIRM_MARKS', gameId)
+        player.socket.emit("CONFIRM_MARKS", gameId);
       }}
       onDrawNewPrompt={(currentPromptId) => {
-        player.socket.emit('DRAW_NEW_PROMPT', gameId, currentPromptId)
+        player.socket.emit("DRAW_NEW_PROMPT", gameId, currentPromptId);
       }}
       onEditAnswer={(newAnswer) => {
-        player.socket.emit('EDIT_ANSWER', gameId, player.data.id, newAnswer)
+        player.socket.emit("EDIT_ANSWER", gameId, player.data.id, newAnswer);
       }}
       onLockAnswer={() => {
-        player.socket.emit('LOCK_ANSWER', gameId, player.data.id)
+        player.socket.emit("LOCK_ANSWER", gameId, player.data.id);
       }}
       onModerateAnswer={(playerId, newMark) => {
-        player.socket.emit('MODERATE_ANSWER_MARK', gameId, playerId, newMark)
+        player.socket.emit("MODERATE_ANSWER_MARK", gameId, playerId, newMark);
       }}
       onPauseTyping={() => {
-        player.socket.emit('PAUSE_PLAYER_TYPING', gameId, player.data.id)
+        player.socket.emit("PAUSE_PLAYER_TYPING", gameId, player.data.id);
       }}
     />
   );

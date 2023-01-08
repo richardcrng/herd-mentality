@@ -15,14 +15,21 @@ export interface PlayerAnswerBubblesProps {
   renderBubbleEndmark?(playerAnswer: PlayerAnswer): JSX.Element | null;
 }
 
-export default function PlayerAnswerBubbles({ answers, pinkCowPlayerId, players, renderBubbleContent, renderBubbleFooter, renderBubbleEndmark }: PlayerAnswerBubblesProps): JSX.Element {
+export default function PlayerAnswerBubbles({
+  answers,
+  pinkCowPlayerId,
+  players,
+  renderBubbleContent,
+  renderBubbleFooter,
+  renderBubbleEndmark,
+}: PlayerAnswerBubblesProps): JSX.Element {
   const playerData = Object.values(players).sort((a, b) => {
     if (a.id === pinkCowPlayerId) {
-      return -1
+      return -1;
     } else if (b.id === pinkCowPlayerId) {
-      return 1
-    } else return b.score - a.score
-  })
+      return 1;
+    } else return b.score - a.score;
+  });
 
   return (
     <Container className={`grid-rows-${playerData.length}`}>
@@ -45,20 +52,24 @@ export default function PlayerAnswerBubbles({ answers, pinkCowPlayerId, players,
               {renderBubbleContent && renderBubbleContent(playerAnswer)}
             </PlayerAnswerBubble>
             <Endmark style={{ opacity: renderBubbleEndmark ? 1 : 0 }}>
-              {renderBubbleEndmark ? renderBubbleEndmark(playerAnswer) : <NeutralIcon size={32} />}
+              {renderBubbleEndmark ? (
+                renderBubbleEndmark(playerAnswer)
+              ) : (
+                <NeutralIcon size={32} />
+              )}
             </Endmark>
           </Fragment>
         );
       })}
     </Container>
-  )
+  );
 }
 
 const Container = styled.div`
   display: grid;
   grid-template-columns: 1fr 80px;
-`
+`;
 
 const Endmark = styled.span.attrs({
-  className: 'flex'
-})``
+  className: "flex",
+})``;
