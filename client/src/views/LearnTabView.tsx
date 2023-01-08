@@ -10,11 +10,12 @@ export enum LearnTab {
 
 interface Props {
   markdownDict: Record<LearnTab, string>;
+  onBackHome(): void;
   onTabChange(newTab: LearnTab): void;
   tab: LearnTab;
 }
 
-export default function LearnTabView({ markdownDict, onTabChange, tab }: Props): JSX.Element {
+export default function LearnTabView({ markdownDict, onBackHome, onTabChange, tab }: Props): JSX.Element {
   return (
     <Container>
       <Tabs>
@@ -29,6 +30,7 @@ export default function LearnTabView({ markdownDict, onTabChange, tab }: Props):
         ))}
       </Tabs>
       <Markdown>{markdownDict[tab]}</Markdown>
+      <ActionButton onClick={onBackHome}>Back to home</ActionButton>
     </Container>
   );
 }
@@ -38,9 +40,10 @@ const Container = styled.div.attrs({
 })`
   grid-template-areas:
     "tabs"
-    "markdown";
+    "markdown"
+    "action";
 
-  grid-template-rows: min-content 1fr;
+  grid-template-rows: min-content 1fr min-content;
 `
 
 const Tabs = styled.div.attrs({
@@ -53,4 +56,10 @@ const Markdown = styled(ReactMarkdown).attrs({
   className: 'overflow-y-scroll prose'
 })`
   grid-area: markdown;
+`
+
+const ActionButton = styled.button.attrs({
+  className: 'btn btn-block'
+})`
+  grid-area: action;
 `

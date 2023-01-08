@@ -43,6 +43,7 @@ export default function LearnTabRoute(): JSX.Element {
         [LearnTab.RULES]: data.rules!,
         [LearnTab.APP]: data.app!,
       }}
+      onBackHome={() => history.push(PATHS.index)}
       onTabChange={(t) => history.push(PATHS.learnForTab(t))}
       tab={tab}
     />
