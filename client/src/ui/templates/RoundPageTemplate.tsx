@@ -71,7 +71,7 @@ const Message = styled.div`
 `;
 
 const PlayerData = styled.div.attrs({
-  className: 'overflow-y-scroll'
+  className: "overflow-y-scroll",
 })`
   grid-area: player-data;
 `;

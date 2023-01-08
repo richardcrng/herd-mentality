@@ -34,7 +34,7 @@ export default function PlayerAnswerBubble({
             isPinkCow && "border-secondary border-4"
           )}
         >
-          <Avatar name={player.name} variant='beam' />
+          <Avatar name={player.name} variant="beam" />
         </div>
       </div>
       <div
