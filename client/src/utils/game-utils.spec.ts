@@ -1,5 +1,5 @@
 import { AnswerMark } from "../types/round.types";
-import { findCurrentPinkCowPlayerId, calculatePlayerScores } from "./game-utils";
+import { findCurrentPinkCowPlayerId, calculatePlayerScores, findWinnerId } from "./game-utils";
 
 
 describe("calculatePlayerScores", () => {
@@ -174,3 +174,49 @@ describe('findCurrentPinkCowPlayerId', () => {
     expect(res).toBeNull();
   });
 })
+
+describe("findWinner", () => {
+  it("declares no winner when all scores are below 8", () => {
+    const playerScores = {
+      a: 1,
+      b: 3,
+      c: 2,
+    };
+
+    const winnerId = findWinnerId(playerScores, null);
+    expect(winnerId).toBeNull();
+  });
+
+  it("declares no winner when the only 8+ score player is pink cow", () => {
+    const playerScores = {
+      a: 1,
+      b: 8,
+      c: 2,
+    };
+
+    const winnerId = findWinnerId(playerScores, "b");
+    expect(winnerId).toBeNull();
+  });
+
+  it("declares no winner when two players are tied", () => {
+    const playerScores = {
+      a: 8,
+      b: 8,
+      c: 2,
+    };
+
+    const winnerId = findWinnerId(playerScores, null);
+    expect(winnerId).toBeNull();
+  });
+
+  it("declares unique player on highest 8+ who is non-pink-cow as winner", () => {
+    const playerScores = {
+      a: 8,
+      b: 9,
+      c: 2,
+    };
+
+    const winnerId = findWinnerId(playerScores, "b");
+    expect(winnerId).toBe("a");
+  });
+});

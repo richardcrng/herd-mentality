@@ -15,6 +15,7 @@ export interface GameStateCore {
 }
 
 export interface GameStateDerived extends GameStateCore {
+  winnerId: string | null;
   pinkCowPlayerId: string | null;
   players: Record<string, ScoredPlayer>;
 }

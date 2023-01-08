@@ -1,7 +1,8 @@
 import { ClientEventListeners } from "../../client/src/types/event.types";
 import { CompletedRound, LockedPlayerAnswer, PlayerAnswer, RoundStatus } from "../../client/src/types/round.types";
 import { GameManager } from "./game/manager";
-import { isEveryPlayerAnswerSubmitted } from '../../client/src/utils/game-utils';
+import { deriveGameData, isEveryPlayerAnswerSubmitted } from '../../client/src/utils/game-utils';
+import { GameStatus } from "../../client/src/types/game.types";
 
 export const approveCurrentPrompt: ClientEventListeners['APPROVE_CURRENT_PROMPT'] = (gameId) => {
   GameManager.for(gameId).update(g => {
@@ -19,12 +20,23 @@ export const approveCurrentPrompt: ClientEventListeners['APPROVE_CURRENT_PROMPT'
 export const confirmMarks: ClientEventListeners['CONFIRM_MARKS'] = (gameId) => {
   const gameManager = GameManager.for(gameId)
   gameManager.update(g => {
+
     g.round.completed.push({
       ...g.round.ongoing,
       status: RoundStatus.COMPLETE
     } as CompletedRound)
   })
-  gameManager.drawNewPrompt()
+
+  const derivedData = deriveGameData(gameManager.snapshotOrFail())
+
+  if (derivedData.winnerId) {
+    gameManager.update(g => {
+      g.status = GameStatus.COMPLETE
+    })
+  } else {
+    gameManager.drawNewPrompt()
+  }
+
 }
 
 export const createHostGame: ClientEventListeners["CREATE_HOST_GAME"] = (

@@ -23,16 +23,18 @@ export const calculatePlayerScores = (
 };
 
 export const deriveGameData = (game: GameStateCore): GameStateDerived => {
-  const scores = calculatePlayerScores(game.round.completed)
+  const scores = calculatePlayerScores(game.round.completed);
+  const pinkCowPlayerId = findCurrentPinkCowPlayerId(game.round.completed);
 
   return {
     ...game,
+    pinkCowPlayerId,
+    winnerId: findWinnerId(scores, pinkCowPlayerId),
     players: mapValues(game.players, (p) => ({
       ...p,
-      score: scores[p.id] ?? 0
+      score: scores[p.id] ?? 0,
     })),
-    pinkCowPlayerId: findCurrentPinkCowPlayerId(game.round.completed)
-  }
+  };
 }
 
 export const findCurrentPinkCowPlayerId = (
@@ -47,6 +49,31 @@ export const findCurrentPinkCowPlayerId = (
       return pinkCowAnswer[0]; // id from the entry
     }
   }
+  return null;
+};
+
+export const findWinnerId = (
+  playersWithScores: Record<string, number>,
+  pinkCowPlayerId: string | null
+): string | null => {
+  const playerEntries = Object.entries(playersWithScores).sort((a, b) => {
+    if (a[0] === pinkCowPlayerId) {
+      return 1;
+    } else if (b[0] === pinkCowPlayerId) {
+      return -1;
+    } else {
+      return b[1] - a[1];
+    }
+  });
+
+  if (
+    playerEntries[0] &&
+    playerEntries[0][1] !== playerEntries[1]?.[1]
+  ) {
+    const winningPlayer = playerEntries[0];
+    return winningPlayer[1] >= 8 ? winningPlayer[0] : null;
+  }
+
   return null;
 };
 
