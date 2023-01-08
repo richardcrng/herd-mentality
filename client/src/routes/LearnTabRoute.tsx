@@ -38,6 +38,7 @@ export default function LearnTabRoute(): JSX.Element {
 
   return (
     <LearnTabView
+      key={tab} // to force rerender, so scroll is not preserved
       markdownDict={{
         [LearnTab.WELCOME]: data.welcome!,
         [LearnTab.RULES]: data.rules!,

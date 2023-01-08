@@ -5,12 +5,14 @@ interface Props {
   onHostNew(): void;
   onNavigateToJoinGame(gameId: string): void;
   onNavigateToHostGame(): void;
+  onNavigateToLearn(): void;
 }
 
 export default function IndexView({
   onHostNew,
   onNavigateToHostGame,
   onNavigateToJoinGame,
+  onNavigateToLearn
 }: Props): JSX.Element {
   const handleTryJoinGame = () => {
     const gameId = window.prompt(
@@ -46,6 +48,12 @@ export default function IndexView({
           onClick={onHostNew}
         >
           Host new
+        </button>
+        <button
+          className="btn btn-accent btn-block btn-xl"
+          onClick={onNavigateToLearn}
+        >
+          Learn more
         </button>
       </div>
     </IntroFrame>

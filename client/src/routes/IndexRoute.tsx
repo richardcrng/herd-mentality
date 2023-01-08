@@ -12,6 +12,7 @@ export default function IndexRoute(): JSX.Element {
         history.push(PATHS.lobbyForGameId(gameId))
       }
       onNavigateToHostGame={() => history.push(PATHS.hostNew)}
+      onNavigateToLearn={() => history.push(PATHS.learn)}
     />
   );
 }

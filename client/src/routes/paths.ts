@@ -5,6 +5,7 @@ export const PATHS = {
   index: "/" as const,
   gameId: "/play/:id" as const,
   gameForId: (gameId: string) => `/play/${gameId}` as const,
+  learn: '/learn' as const,
   learnTab: "/learn/:tab" as const,
   learnForTab: (tab: LearnTab) => `/learn/${tab}` as const,
   lobbyId: "/lobby/:id" as const,

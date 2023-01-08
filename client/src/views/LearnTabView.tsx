@@ -19,28 +19,46 @@ export default function LearnTabView({ markdownDict, onBackHome, onTabChange, ta
   return (
     <Container>
       <Tabs>
-        {Object.values(LearnTab).map(t => (
+        {Object.values(LearnTab).map((t) => (
           <span
             key={t}
-            className={classNames("tab tab-lifted", t === tab && 'tab-active')}
+            className={classNames("tab tab-lifted", t === tab && "tab-active")}
             onClick={() => onTabChange(t)}
           >
             {t}
           </span>
         ))}
       </Tabs>
-      <Markdown>{markdownDict[tab]}</Markdown>
+      <Content>
+        <Markdown>{markdownDict[tab]}</Markdown>
+        {tab === LearnTab.WELCOME && (
+          <button
+            className="btn btn-block btn-primary"
+            onClick={() => onTabChange(LearnTab.RULES)}
+          >
+            Game rules
+          </button>
+        )}
+        {tab === LearnTab.RULES && (
+          <button
+            className="btn btn-block btn-primary"
+            onClick={() => onTabChange(LearnTab.APP)}
+          >
+            Using this app
+          </button>
+        )}
+      </Content>
       <ActionButton onClick={onBackHome}>Back to home</ActionButton>
     </Container>
   );
 }
 
 const Container = styled.div.attrs({
-  className: 'h-full grid'
+  className: 'h-full grid gap-y-2'
 })`
   grid-template-areas:
     "tabs"
-    "markdown"
+    "content"
     "action";
 
   grid-template-rows: min-content 1fr min-content;
@@ -52,11 +70,15 @@ const Tabs = styled.div.attrs({
   grid-area: tabs;
 `
 
-const Markdown = styled(ReactMarkdown).attrs({
-  className: 'overflow-y-scroll prose'
+const Content = styled.div.attrs({
+  className: 'overflow-y-scroll'
 })`
-  grid-area: markdown;
+  grid-area: content;
 `
+
+const Markdown = styled(ReactMarkdown).attrs({
+  className: 'prose pb-4'
+})``
 
 const ActionButton = styled.button.attrs({
   className: 'btn btn-block'
