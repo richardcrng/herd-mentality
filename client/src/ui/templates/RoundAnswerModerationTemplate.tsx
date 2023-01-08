@@ -17,8 +17,10 @@ export default function RoundAnswerModerationTemplate({ game, player, onConfirmM
 
   const message = player.isHost ? "As host, please moderate the default marking. Tap on an answer's mark on the right to update it." : "Waiting for the host to moderate the marking..."
 
-  const createMarkHandler = (playerId: string, newMark: AnswerMark | null) => () => {
-    onModerateAnswer(playerId, newMark)
+  const createMarkHandler = (playerId: string, newMark: AnswerMark | null) => {
+    return player.isHost ? () => {
+      onModerateAnswer(playerId, newMark)
+    } : undefined
   }
 
   return (
