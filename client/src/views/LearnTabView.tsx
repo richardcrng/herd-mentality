@@ -1,6 +1,6 @@
-import ReactMarkdown from 'react-markdown'
-import styled from 'styled-components'
-import classNames from 'classnames';
+import ReactMarkdown from "react-markdown";
+import styled from "styled-components";
+import classNames from "classnames";
 
 export enum LearnTab {
   WELCOME = "welcome",
@@ -15,7 +15,12 @@ interface Props {
   tab: LearnTab;
 }
 
-export default function LearnTabView({ markdownDict, onBackHome, onTabChange, tab }: Props): JSX.Element {
+export default function LearnTabView({
+  markdownDict,
+  onBackHome,
+  onTabChange,
+  tab,
+}: Props): JSX.Element {
   return (
     <Container>
       <Tabs>
@@ -54,7 +59,7 @@ export default function LearnTabView({ markdownDict, onBackHome, onTabChange, ta
 }
 
 const Container = styled.div.attrs({
-  className: 'h-full grid gap-y-2'
+  className: "h-full grid gap-y-2",
 })`
   grid-template-areas:
     "tabs"
@@ -62,26 +67,26 @@ const Container = styled.div.attrs({
     "action";
 
   grid-template-rows: min-content 1fr min-content;
-`
+`;
 
 const Tabs = styled.div.attrs({
-  className: 'tabs'
+  className: "tabs",
 })`
   grid-area: tabs;
-`
+`;
 
 const Content = styled.div.attrs({
-  className: 'overflow-y-scroll'
+  className: "overflow-y-scroll",
 })`
   grid-area: content;
-`
+`;
 
 const Markdown = styled(ReactMarkdown).attrs({
-  className: 'prose pb-4'
-})``
+  className: "prose pb-4",
+})``;
 
 const ActionButton = styled.button.attrs({
-  className: 'btn btn-block'
+  className: "btn btn-block",
 })`
   grid-area: action;
-`
+`;

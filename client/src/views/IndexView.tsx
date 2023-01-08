@@ -12,7 +12,7 @@ export default function IndexView({
   onHostNew,
   onNavigateToHostGame,
   onNavigateToJoinGame,
-  onNavigateToLearn
+  onNavigateToLearn,
 }: Props): JSX.Element {
   const handleTryJoinGame = () => {
     const gameId = window.prompt(

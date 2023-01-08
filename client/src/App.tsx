@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import styled from "styled-components";
 import useMobileVH from "./hooks/useMobileVH";
 import HostNewRoute from "./routes/HostNewRoute";
@@ -25,7 +30,13 @@ function App(): JSX.Element {
             <Route exact path={PATHS.resultsId} component={ResultsIdRoute} />
 
             {/* Learning routes */}
-            <Route exact path={'/learn'} component={() => <Redirect to={PATHS.learnForTab(LearnTab.WELCOME)} />} />
+            <Route
+              exact
+              path={"/learn"}
+              component={() => (
+                <Redirect to={PATHS.learnForTab(LearnTab.WELCOME)} />
+              )}
+            />
             <Route exact path={PATHS.learnTab} component={LearnTabRoute} />
 
             {/* Index */}
