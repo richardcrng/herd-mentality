@@ -8,7 +8,9 @@ export default function IndexRoute(): JSX.Element {
   return (
     <IndexView
       onHostNew={() => history.push(PATHS.hostNew)}
-      onNavigateToJoinGame={(gameId) => history.push(PATHS.lobbyForGameId(gameId))}
+      onNavigateToJoinGame={(gameId) =>
+        history.push(PATHS.lobbyForGameId(gameId))
+      }
       onNavigateToHostGame={() => history.push(PATHS.hostNew)}
     />
   );

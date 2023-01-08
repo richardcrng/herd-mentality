@@ -1,26 +1,33 @@
-import { useState } from 'react';
-import { IoSend as SendIcon } from 'react-icons/io5'
+import { useState } from "react";
+import { IoSend as SendIcon } from "react-icons/io5";
+import { GameOngoing } from "../../types/game.types";
 // import { FiSend as SendIcon } from 'react-icons/fi'
-import { GameStateDerived } from "../../types/game.types"
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import RoundPageTemplate from "./RoundPageTemplate";
 
 interface Props extends GameOngoingHandlers {
-  game: GameStateDerived;
+  game: GameOngoing;
   player: Player;
 }
 
-export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnswer, onLockAnswer, onPauseTyping }: Props): JSX.Element {
-  const message = "Type your answer at the bottom"
-  const playerAnswer = game.round.ongoing.playerAnswers[player.id]
+export default function RoundAnswerSubmissionTemplate({
+  game,
+  player,
+  onEditAnswer,
+  onLockAnswer,
+  onPauseTyping,
+}: Props): JSX.Element {
+  const message = "Type your answer at the bottom";
+  const playerAnswer = game.round.ongoing.playerAnswers[player.id];
 
-  const [typedAnswer, setTypedAnswer] = useState('')
+  const [typedAnswer, setTypedAnswer] = useState("");
 
   return (
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
+      pinkCowPlayerId={game.pinkCowPlayerId}
       players={game.players}
       renderBubbleContent={(playerAnswer) => {
         if (playerAnswer.isLocked) {
@@ -28,17 +35,17 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
         } else if (playerAnswer.isTyping) {
           return <span>{playerAnswer.isTyping ? "..." : ""}</span>;
         } else {
-          return null
+          return null;
         }
       }}
       action={
-        <div className='w-full flex gap-x-2'>
+        <div className="w-full flex gap-x-2">
           <input
             className="input rounded-lg grow input-bordered input-info"
             type="text"
             disabled={playerAnswer?.isLocked}
             onChange={(e) => {
-              setTypedAnswer(e.target.value)
+              setTypedAnswer(e.target.value);
               onEditAnswer(e.target.value);
               setTimeout(() => {
                 onPauseTyping();
@@ -47,7 +54,7 @@ export default function RoundAnswerSubmissionTemplate({ game, player, onEditAnsw
             value={typedAnswer}
           />
           <button
-            className='btn rounded-lg'
+            className="btn rounded-lg"
             onClick={onLockAnswer}
             disabled={!typedAnswer || playerAnswer?.isLocked}
           >

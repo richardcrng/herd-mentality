@@ -1,30 +1,41 @@
-import { MdSentimentNeutral as NeutralIcon } from 'react-icons/md'
+import { MdSentimentNeutral as NeutralIcon } from "react-icons/md";
 import { GiPodiumWinner as WinnerIcon } from "react-icons/gi";
 import { SiHappycow as CowIcon } from "react-icons/si";
-import { GameStateDerived } from "../../types/game.types"
+import { GameOngoing } from "../../types/game.types";
 import { GameOngoingHandlers } from "../../types/handler.types";
 import { Player } from "../../types/player.types";
 import { AnswerMark } from "../../types/round.types";
 import RoundPageTemplate from "./RoundPageTemplate";
-import styled from 'styled-components';
+import styled from "styled-components";
 
 interface Props extends GameOngoingHandlers {
-  game: GameStateDerived;
+  game: GameOngoing;
   player: Player;
 }
 
-export default function RoundAnswerModerationTemplate({ game, player, onModerateAnswer }: Props): JSX.Element {
+export default function RoundAnswerModerationTemplate({
+  game,
+  player,
+  onConfirmMarks,
+  onModerateAnswer,
+}: Props): JSX.Element {
+  const message = player.isHost
+    ? "As host, please moderate the default marking. Tap on an answer's mark on the right to update it."
+    : "Waiting for the host to moderate the marking...";
 
-  const message = player.isHost ? "As host, please moderate the default marking. Tap on an answer's mark on the right to update it." : "Waiting for the host to moderate the marking..."
-
-  const createMarkHandler = (playerId: string, newMark: AnswerMark | null) => () => {
-    onModerateAnswer(playerId, newMark)
-  }
+  const createMarkHandler = (playerId: string, newMark: AnswerMark | null) => {
+    return player.isHost
+      ? () => {
+          onModerateAnswer(playerId, newMark);
+        }
+      : undefined;
+  };
 
   return (
     <RoundPageTemplate
       round={game.round.ongoing}
       message={message}
+      pinkCowPlayerId={game.pinkCowPlayerId}
       players={game.players}
       renderBubbleContent={(playerAnswer) => <span>{playerAnswer.text}</span>}
       renderBubbleEndmark={(playerAnswer) => {
@@ -73,15 +84,22 @@ export default function RoundAnswerModerationTemplate({ game, player, onModerate
             );
         }
       }}
+      action={
+        player.isHost ? (
+          <button className="btn btn-block" onClick={onConfirmMarks}>
+            Confirm marks
+          </button>
+        ) : undefined
+      }
     />
   );
 }
 
 const ButtonContainer = styled.div.attrs({
-  className: 'flex flex-col justify-end'
-})``
+  className: "flex flex-col justify-end",
+})``;
 
 const MarkText = styled.p`
   text-align: center;
   font-weight: 600;
-`
+`;

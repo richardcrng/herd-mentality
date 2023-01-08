@@ -7,9 +7,14 @@ export interface LobbyHandlers {
 
 export interface GameOngoingHandlers {
   onApprovePrompt(): void;
-  onDrawNewPrompt(currentPromptId: RoundPrompt['id']): void;
+  onConfirmMarks(): void;
+  onDrawNewPrompt(currentPromptId: RoundPrompt["id"]): void;
   onEditAnswer(newAnswer: string): void;
   onLockAnswer(): void;
   onPauseTyping(): void;
   onModerateAnswer(playerId: string, newMark: AnswerMark | null): void;
+}
+
+export interface GameCompleteHandlers {
+  onGameRestart(): void;
 }

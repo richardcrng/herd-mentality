@@ -6,6 +6,7 @@ import IndexRoute from "./routes/IndexRoute";
 import LobbyIdRoute from "./routes/LobbyIdRoute";
 import { PATHS } from "./routes/paths";
 import GameIdRoute from "./routes/GameIdRoute";
+import ResultsIdRoute from "./routes/ResultsIdRoute";
 
 function App(): JSX.Element {
   useMobileVH();
@@ -19,6 +20,7 @@ function App(): JSX.Element {
             <Route exact path={PATHS.hostNew} component={HostNewRoute} />
             <Route exact path={PATHS.lobbyId} component={LobbyIdRoute} />
             <Route exact path={PATHS.gameId} component={GameIdRoute} />
+            <Route exact path={PATHS.resultsId} component={ResultsIdRoute} />
             <Route path={PATHS.index} component={IndexRoute} />
           </Switch>
         </AppContainer>
@@ -43,7 +45,7 @@ const AppBackground = styled.div.attrs({
 const AppContainer = styled.div.attrs({
   className: "h-app w-app rounded-lg",
 })`
-  background-color: rgba(255,255,255,0.9);
+  background-color: rgba(255, 255, 255, 0.9);
   padding: 5px;
 `;
 

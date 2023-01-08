@@ -15,15 +15,30 @@ export interface GameStateCore {
 }
 
 export interface GameStateDerived extends GameStateCore {
+  winnerId: string | null;
   pinkCowPlayerId: string | null;
   players: Record<string, ScoredPlayer>;
 }
 
-export type Game = GameStateDerived;
+export interface GameInLobby extends GameStateDerived {
+  status: GameStatus.LOBBY;
+}
+
+export interface GameOngoing extends GameStateDerived {
+  status: GameStatus.ONGOING;
+}
+
+export interface GameComplete extends GameStateDerived {
+  status: GameStatus.COMPLETE;
+  winnerId: string;
+}
+
+export type Game = GameInLobby | GameOngoing | GameComplete;
 
 export enum GameStatus {
   LOBBY = "LOBBY",
   ONGOING = "ONGOING",
+  COMPLETE = "COMPLETE",
 }
 
 export interface GameSettings {}

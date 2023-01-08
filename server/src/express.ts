@@ -13,19 +13,19 @@ app.get("/", (req, res) => {
 app.get("/questions", async (req, res) => {
   const questions = await getQuestionDatabase();
   res.json({
-    status: 'success',
-    data: { questions }
-  })
-})
+    status: "success",
+    data: { questions },
+  });
+});
 
 app.get("/question/:id", async ({ params: { id } }, res) => {
   assertsIsProtoQAId(id);
   const question = getQuestionById(id);
   res.json({
-    status: 'success',
-    data: { question }
-  })
-})
+    status: "success",
+    data: { question },
+  });
+});
 
 app.get("/ping", (req, res) => {
   res.json({ status: "success" });

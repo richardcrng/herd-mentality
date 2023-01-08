@@ -42,8 +42,11 @@ export interface MarkedPlayerAnswer extends LockedPlayerAnswer {
   mark: AnswerMark | null;
 }
 
-export type OngoingRound = RoundInQuestionApproval | RoundInSubmitting | RoundInModeration
-export type Round = OngoingRound | CompletedRound
+export type OngoingRound =
+  | RoundInQuestionApproval
+  | RoundInSubmitting
+  | RoundInModeration;
+export type Round = OngoingRound | CompletedRound;
 
 export interface RoundInQuestionApproval extends RoundBase {
   status: RoundStatus.QUESTION_APPROVAL;
