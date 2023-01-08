@@ -3,7 +3,7 @@ import useGame from "../hooks/useGame";
 import useSocketPlayer from "../hooks/useSocketPlayer";
 import { GameStatus } from "../types/game.types";
 import LoadingGameIdView from "../views/LoadingGameIdView";
-import ResultsIdView from "../views/ResultsView";
+import ResultsIdView from "../views/ResultsIdView";
 import { PATHS } from "./paths";
 
 export default function ResultsIdRoute(): JSX.Element {
